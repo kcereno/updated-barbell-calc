@@ -8,6 +8,8 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  ButtonGroup,
+  Button,
 } from '@mui/material';
 import './App.css';
 import { useState } from 'react';
@@ -35,6 +37,14 @@ function App() {
     value: string;
     weight: number;
   }
+
+  const editButtons = () => {
+    return (
+      <ButtonGroup>
+        <Button>One</Button>
+      </ButtonGroup>
+    );
+  };
 
   const plateValues: PlateValue[] = [
     { value: '2.5lbs', weight: 2.5 },
@@ -109,7 +119,7 @@ function App() {
       </div>
 
       {/* Results */}
-      <div className="resuts bg-slate-400">
+      <div className="resuts">
         <TableContainer>
           <Table>
             <TableHead>
@@ -129,7 +139,14 @@ function App() {
                   >
                     {entry.plateValue}
                   </TableCell>
-                  <TableCell align="right">Buttons</TableCell>
+                  <TableCell align="right">
+                    {
+                      <ButtonGroup size="small">
+                        <Button>+</Button>
+                        <Button>-</Button>
+                      </ButtonGroup>
+                    }
+                  </TableCell>
                   <TableCell align="right">{entry.perSide}</TableCell>
                   <TableCell align="right">{entry.netWeight}</TableCell>
                 </TableRow>
