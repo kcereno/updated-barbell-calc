@@ -134,6 +134,19 @@ function App() {
                   <TableCell align="right">{entry.netWeight}</TableCell>
                 </TableRow>
               ))}
+              <TableRow>
+                <TableCell rowSpan={3} />
+                <TableCell colSpan={2}>Bar Weight</TableCell>
+                <TableCell align="center">45lbs</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={2}>Plate Weight</TableCell>
+                <TableCell align="center">200lbs</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={2}>Total Weight</TableCell>
+                <TableCell align="center">245lbs</TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
