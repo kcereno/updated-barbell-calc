@@ -1,9 +1,13 @@
 import {
-  Slider,
+  Table,
   ToggleButton,
   ToggleButtonGroup,
-  Box,
   TextField,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
 } from '@mui/material';
 import './App.css';
 import { useState } from 'react';
@@ -43,14 +47,29 @@ function App() {
     { value: '55lbs', weight: 55 },
   ];
 
+  interface DataEntry {
+    plateValue: string;
+    perSide: number;
+    netWeight: number;
+  }
+
+  const data: DataEntry[] = [
+    { plateValue: '2.5lbs', perSide: 2, netWeight: 5 },
+    { plateValue: '5lbs', perSide: 2, netWeight: 10 },
+    { plateValue: '10lbs', perSide: 2, netWeight: 20 },
+    { plateValue: '15lbs', perSide: 2, netWeight: 30 },
+  ];
+
   return (
     <div className="App mx-2">
+      {/* Title */}
       <div className="title">
         <h1>Barbell Calculator</h1>
         <h3>By K</h3>
       </div>
 
-      <div className="inputs">
+      {/* Inputs */}
+      <div className="inputs mb-5">
         <div className="input__bar-weight">
           <h2>Bar Weight</h2>
           <ToggleButtonGroup
@@ -87,6 +106,37 @@ function App() {
             fullWidth
           />
         </div>
+      </div>
+
+      {/* Results */}
+      <div className="resuts bg-slate-400">
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Plate</TableCell>
+                <TableCell align="right">Edit</TableCell>
+                <TableCell align="right">Per Side</TableCell>
+                <TableCell align="right">Net Weight</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map((entry) => (
+                <TableRow key={entry.plateValue}>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                  >
+                    {entry.plateValue}
+                  </TableCell>
+                  <TableCell align="right">Buttons</TableCell>
+                  <TableCell align="right">{entry.perSide}</TableCell>
+                  <TableCell align="right">{entry.netWeight}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     </div>
   );
