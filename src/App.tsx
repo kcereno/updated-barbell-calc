@@ -29,10 +29,20 @@ function App() {
   };
 
   const handleSetAvailablePlates = (
-    event: React.MouseEvent<HTMLElement>,
-    newAvailablePlates: number[]
+    event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
-    setAvailablePlates(newAvailablePlates);
+    const selectedPlate = (event.target as HTMLInputElement).value;
+    let updatedAvailablePlates: number[];
+
+    if (inAvailablePlatesArr(+selectedPlate)) {
+      updatedAvailablePlates = availablePlates.filter(
+        (plate) => plate! - +selectedPlate
+      );
+    } else {
+      updatedAvailablePlates = [...availablePlates, +selectedPlate];
+    }
+
+    setAvailablePlates(updatedAvailablePlates);
   };
 
   const editButtons = () => {
@@ -41,6 +51,10 @@ function App() {
         <Button>One</Button>
       </ButtonGroup>
     );
+  };
+
+  const inAvailablePlatesArr = (plate: number) => {
+    return availablePlates.includes(plate);
   };
 
   return (
@@ -66,17 +80,21 @@ function App() {
             <ToggleButton value="60">60 lbs</ToggleButton>
           </ToggleButtonGroup>
         </div>
+
         <div className="input__available-plates">
           <h2>Available Plates</h2>
           <div className="flex flex-wrap">
-            {plateValues.map((plateValue) => (
-              <div className="m-1">
+            {plateValues.map((plate) => (
+              <div
+                className="m-1"
+                key={plate.entry}
+              >
                 <ToggleButton
-                  key={plateValue.value}
-                  value={plateValue.value}
-                  selected={false}
+                  value={plate.value}
+                  selected={inAvailablePlatesArr(plate.value)}
+                  onClick={handleSetAvailablePlates}
                 >
-                  {plateValue.value}
+                  {plate.entry}
                 </ToggleButton>
               </div>
             ))}
@@ -92,7 +110,7 @@ function App() {
       </div>
 
       {/* Results */}
-      <div className="resuts">
+      {/* <div className="resuts">
         <TableContainer>
           <Table>
             <TableHead>
@@ -140,7 +158,7 @@ function App() {
             </TableBody>
           </Table>
         </TableContainer>
-      </div>
+      </div> */}
     </div>
   );
 }

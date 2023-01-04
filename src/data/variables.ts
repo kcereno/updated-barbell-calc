@@ -1,14 +1,14 @@
 import { PlateValue, DataEntry } from './interfaces';
 
 export const plateValues: PlateValue[] = [
-  { value: '2.5lbs', weight: 2.5 },
-  { value: '5lbs', weight: 5 },
-  { value: '10lbs', weight: 10 },
-  { value: '15lbs', weight: 15 },
-  { value: '25lbs', weight: 25 },
-  { value: '35lbs', weight: 35 },
-  { value: '45lbs', weight: 45 },
-  { value: '55lbs', weight: 55 },
+  { entry: '2.5lbs', value: 2.5 },
+  { entry: '5lbs', value: 5 },
+  { entry: '10lbs', value: 10 },
+  { entry: '15lbs', value: 15 },
+  { entry: '25lbs', value: 25 },
+  { entry: '35lbs', value: 35 },
+  { entry: '45lbs', value: 45 },
+  { entry: '55lbs', value: 55 },
 ];
 
 export const data: DataEntry[] = [

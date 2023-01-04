@@ -1,6 +1,6 @@
 export interface PlateValue {
-  value: string;
-  weight: number;
+  entry: string;
+  value: number;
 }
 
 export interface DataEntry {
