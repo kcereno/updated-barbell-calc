@@ -17,9 +17,9 @@ import { plateValues, data } from './data/variables';
 
 function App() {
   const [barWeight, setBarWeight] = useState<number>(0);
-  console.log('App ~ barWeight', barWeight);
   const [availablePlates, setAvailablePlates] = useState<number[]>([]);
-  console.log('App ~ availablePlates', availablePlates);
+  // console.log('App ~ barWeight', barWeight);
+  // console.log('App ~ availablePlates', availablePlates);
 
   const handleSetBarWeight = (
     event: React.MouseEvent<HTMLElement>,
@@ -29,18 +29,16 @@ function App() {
   };
 
   const handleSetAvailablePlates = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
+    selectedPlate: number
   ) => {
-    const selectedPlate = (event.target as HTMLInputElement).value;
-    let updatedAvailablePlates: number[];
+    let updatedAvailablePlates: number[] = [...availablePlates];
 
-    if (inAvailablePlatesArr(+selectedPlate)) {
-      updatedAvailablePlates = availablePlates.filter(
-        (plate) => plate! - +selectedPlate
-      );
-    } else {
-      updatedAvailablePlates = [...availablePlates, +selectedPlate];
-    }
+    inAvailablePlatesArr(selectedPlate)
+      ? (updatedAvailablePlates = updatedAvailablePlates.filter(
+          (plate) => plate !== selectedPlate
+        ))
+      : updatedAvailablePlates.push(selectedPlate);
 
     setAvailablePlates(updatedAvailablePlates);
   };
@@ -84,20 +82,22 @@ function App() {
         <div className="input__available-plates">
           <h2>Available Plates</h2>
           <div className="flex flex-wrap">
-            {plateValues.map((plate) => (
-              <div
-                className="m-1"
-                key={plate.entry}
-              >
-                <ToggleButton
-                  value={plate.value}
-                  selected={inAvailablePlatesArr(plate.value)}
-                  onClick={handleSetAvailablePlates}
+            <ToggleButtonGroup>
+              {plateValues.map((plate) => (
+                <div
+                  className="m-1"
+                  key={plate.entry}
                 >
-                  {plate.entry}
-                </ToggleButton>
-              </div>
-            ))}
+                  <ToggleButton
+                    value={plate.value}
+                    selected={inAvailablePlatesArr(plate.value)}
+                    onClick={handleSetAvailablePlates}
+                  >
+                    {plate.entry}
+                  </ToggleButton>
+                </div>
+              ))}
+            </ToggleButtonGroup>
           </div>
         </div>
         <div className="input__target-weight">
