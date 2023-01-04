@@ -18,20 +18,23 @@ import { plateValues, data } from './data/variables';
 function App() {
   const [barWeight, setBarWeight] = useState<number>(0);
   const [availablePlates, setAvailablePlates] = useState<number[]>([]);
+  const [targetWeight, setTargetWeight] = useState<number | null>(null);
   // console.log('App ~ barWeight', barWeight);
   // console.log('App ~ availablePlates', availablePlates);
 
-  const handleSetBarWeight = (
+  const handleBarWeightChange = (
     event: React.MouseEvent<HTMLElement>,
     newBarWeight: number
   ) => {
+    event.preventDefault();
     setBarWeight(newBarWeight);
   };
 
-  const handleSetAvailablePlates = (
+  const handleAvailablePlatesChange = (
     event: React.MouseEvent<HTMLElement, MouseEvent>,
     selectedPlate: number
   ) => {
+    event.preventDefault();
     let updatedAvailablePlates: number[] = [...availablePlates];
 
     inAvailablePlatesArr(selectedPlate)
@@ -41,6 +44,13 @@ function App() {
       : updatedAvailablePlates.push(selectedPlate);
 
     setAvailablePlates(updatedAvailablePlates);
+  };
+
+  const handleTargetWeightChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const updatedTargetWeight = event.target.value;
+    setTargetWeight(Number(updatedTargetWeight));
   };
 
   const editButtons = () => {
@@ -70,7 +80,7 @@ function App() {
           <ToggleButtonGroup
             exclusive
             value={barWeight}
-            onChange={handleSetBarWeight}
+            onChange={handleBarWeightChange}
           >
             <ToggleButton value="0">No Bar</ToggleButton>
             <ToggleButton value="35">35 lbs</ToggleButton>
@@ -91,7 +101,7 @@ function App() {
                   <ToggleButton
                     value={plate.value}
                     selected={inAvailablePlatesArr(plate.value)}
-                    onClick={handleSetAvailablePlates}
+                    onClick={handleAvailablePlatesChange}
                   >
                     {plate.entry}
                   </ToggleButton>
@@ -105,6 +115,8 @@ function App() {
             label="Target Weight"
             variant="outlined"
             fullWidth
+            onChange={handleTargetWeightChange}
+            value={targetWeight}
           />
         </div>
       </div>
