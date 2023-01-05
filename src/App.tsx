@@ -20,9 +20,8 @@ function App() {
   const [barWeight, setBarWeight] = useState<number>(0);
   const [availablePlates, setAvailablePlates] = useState<number[]>([]);
   const [targetWeight, setTargetWeight] = useState<number>();
-  // console.log('App ~ barWeight', barWeight);
-  // console.log('App ~ availablePlates', availablePlates);
 
+  // Event Handlers
   const handleChangeBarWeight = (
     event: React.MouseEvent<HTMLElement>,
     newBarWeight: number
@@ -54,6 +53,22 @@ function App() {
     setTargetWeight(Number(updatedTargetWeight));
   };
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = {
+      barWeight,
+      availablePlates,
+      targetWeight,
+    };
+  };
+
+  const handleReset = () => [
+    setBarWeight(0),
+    setAvailablePlates([]),
+    setTargetWeight(undefined),
+  ];
+
+  // Edit Buttons
   const editButtons = () => {
     return (
       <ButtonGroup>
@@ -71,7 +86,10 @@ function App() {
       </div>
 
       {/* Inputs */}
-      <div className="inputs mb-5">
+      <form
+        onSubmit={handleSubmit}
+        className="inputs mb-5"
+      >
         <div className="input__bar-weight">
           <h2>Bar Weight</h2>
           <ToggleButtonGroup
@@ -109,10 +127,18 @@ function App() {
             variant="outlined"
             fullWidth
             onChange={handleChangeTargetWeight}
-            value={targetWeight}
           />
         </div>
-      </div>
+        <div className="buttons">
+          <Button type="submit">Calculate</Button>
+          <Button
+            type="reset"
+            onClick={handleReset}
+          >
+            Reset
+          </Button>
+        </div>
+      </form>
 
       {/* Results */}
       {/* <div className="resuts">
