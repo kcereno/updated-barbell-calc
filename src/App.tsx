@@ -18,7 +18,7 @@ import { plateValues, data } from './data/variables';
 function App() {
   const [barWeight, setBarWeight] = useState<number>(0);
   const [availablePlates, setAvailablePlates] = useState<number[]>([]);
-  const [targetWeight, setTargetWeight] = useState<number | null>(null);
+  const [targetWeight, setTargetWeight] = useState<number>();
   // console.log('App ~ barWeight', barWeight);
   // console.log('App ~ availablePlates', availablePlates);
 
