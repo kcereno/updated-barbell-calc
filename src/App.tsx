@@ -22,7 +22,7 @@ function App() {
   // console.log('App ~ barWeight', barWeight);
   // console.log('App ~ availablePlates', availablePlates);
 
-  const handleBarWeightChange = (
+  const handleChangeBarWeight = (
     event: React.MouseEvent<HTMLElement>,
     newBarWeight: number
   ) => {
@@ -30,7 +30,7 @@ function App() {
     setBarWeight(newBarWeight);
   };
 
-  const handleAvailablePlatesChange = (
+  const handleChangeAvailablePlates = (
     event: React.MouseEvent<HTMLElement, MouseEvent>,
     selectedPlate: number
   ) => {
@@ -46,7 +46,7 @@ function App() {
     setAvailablePlates(updatedAvailablePlates);
   };
 
-  const handleTargetWeightChange = (
+  const handleChangeTargetWeight = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const updatedTargetWeight = event.target.value;
@@ -80,7 +80,7 @@ function App() {
           <ToggleButtonGroup
             exclusive
             value={barWeight}
-            onChange={handleBarWeightChange}
+            onChange={handleChangeBarWeight}
           >
             <ToggleButton value="0">No Bar</ToggleButton>
             <ToggleButton value="35">35 lbs</ToggleButton>
@@ -101,7 +101,7 @@ function App() {
                   <ToggleButton
                     value={plate.value}
                     selected={inAvailablePlatesArr(plate.value)}
-                    onClick={handleAvailablePlatesChange}
+                    onClick={handleChangeAvailablePlates}
                   >
                     {plate.entry}
                   </ToggleButton>
@@ -115,7 +115,7 @@ function App() {
             label="Target Weight"
             variant="outlined"
             fullWidth
-            onChange={handleTargetWeightChange}
+            onChange={handleChangeTargetWeight}
             value={targetWeight}
           />
         </div>
