@@ -91,21 +91,14 @@ function App() {
           <div className="flex flex-wrap">
             <ToggleButtonGroup>
               {plateValues.map((plate) => (
-                <div
-                  className="m-1"
+                <ToggleButton
                   key={plate.entry}
+                  value={plate.value}
+                  selected={inAvailablePlatesArr(plate.value, availablePlates)}
+                  onClick={handleChangeAvailablePlates}
                 >
-                  <ToggleButton
-                    value={plate.value}
-                    selected={inAvailablePlatesArr(
-                      plate.value,
-                      availablePlates
-                    )}
-                    onClick={handleChangeAvailablePlates}
-                  >
-                    {plate.entry}
-                  </ToggleButton>
-                </div>
+                  {plate.entry}
+                </ToggleButton>
               ))}
             </ToggleButtonGroup>
           </div>
