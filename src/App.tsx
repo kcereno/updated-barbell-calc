@@ -14,6 +14,7 @@ import {
 import './App.css';
 import { useState } from 'react';
 import { plateValues, data } from './data/variables';
+import { inAvailablePlatesArr } from './data/functions';
 
 function App() {
   const [barWeight, setBarWeight] = useState<number>(0);
@@ -37,7 +38,7 @@ function App() {
     event.preventDefault();
     let updatedAvailablePlates: number[] = [...availablePlates];
 
-    inAvailablePlatesArr(selectedPlate)
+    inAvailablePlatesArr(selectedPlate, availablePlates)
       ? (updatedAvailablePlates = updatedAvailablePlates.filter(
           (plate) => plate !== selectedPlate
         ))
@@ -59,10 +60,6 @@ function App() {
         <Button>One</Button>
       </ButtonGroup>
     );
-  };
-
-  const inAvailablePlatesArr = (plate: number) => {
-    return availablePlates.includes(plate);
   };
 
   return (
@@ -100,7 +97,10 @@ function App() {
                 >
                   <ToggleButton
                     value={plate.value}
-                    selected={inAvailablePlatesArr(plate.value)}
+                    selected={inAvailablePlatesArr(
+                      plate.value,
+                      availablePlates
+                    )}
                     onClick={handleChangeAvailablePlates}
                   >
                     {plate.entry}
