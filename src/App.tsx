@@ -20,6 +20,7 @@ import { calculateTotalPlateWeight } from './data/functions';
 
 function App() {
   const [barWeight, setBarWeight] = useState<number>(45);
+  console.log('App ~ barWeight', barWeight);
   const [availablePlates, setAvailablePlates] = useState<number[]>([
     2.5, 5, 10, 15, 25, 35, 45, 55,
   ]);
@@ -45,7 +46,10 @@ function App() {
     newBarWeight: number
   ) => {
     event.preventDefault();
-    setBarWeight(newBarWeight);
+
+    if (newBarWeight || newBarWeight === 0) {
+      setBarWeight(newBarWeight);
+    }
   };
 
   const handleChangeAvailablePlates = (
