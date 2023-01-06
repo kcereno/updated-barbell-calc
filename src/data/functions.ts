@@ -16,22 +16,6 @@ export const calculateLoadout = (
   let netTargetWeight = (targetWeight - barWeight) / 2;
   const sortedPlates = plates.sort((a, b) => b - a);
 
-  //iterate through plates array
-  // if current plate is less than netTargetWeight
-  //divide netTargetWeight by current plate and round down
-  // create an entry in result obkect with plate value and number of plates
-
-  // sortedPlates.forEach((plate) => {
-  //   if (plate < netTargetWeight) {
-  //     const quantity = Math.floor(netTargetWeight / plate);
-  //     netTargetWeight = netTargetWeight - quantity * plate;
-  //     result = [
-  //       ...result,
-  //       { plateValue: plate, perSide: quantity, netWeight: plate * quantity },
-  //     ];
-  //   }
-  // });
-
   const result = sortedPlates.map((plate) => {
     if (plate <= netTargetWeight) {
       const quantity = Math.floor(netTargetWeight / plate);
@@ -48,11 +32,6 @@ export const calculateLoadout = (
 
   return result;
 };
-
-export const generateLoadoutTemplate = (plates: number[]): Loadout =>
-  plates.map((plate) => {
-    return { plateValue: plate, perSide: 0, netWeight: 0 };
-  });
 
 export const calculateTotalPlateWeight = (loadout: Loadout): number => {
   let total = 0;

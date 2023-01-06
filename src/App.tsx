@@ -14,27 +14,22 @@ import {
 import './App.css';
 import { useEffect, useState } from 'react';
 import { plateValues, barWeights } from './data/variables';
-import {
-  inAvailablePlatesArr,
-  calculateLoadout,
-  generateLoadoutTemplate,
-} from './data/functions';
+import { inAvailablePlatesArr, calculateLoadout } from './data/functions';
 import { Loadout } from './data/types';
 import { calculateTotalPlateWeight } from './data/functions';
 
 function App() {
   const [barWeight, setBarWeight] = useState<number>(45);
   const [availablePlates, setAvailablePlates] = useState<number[]>([
-    2.5, 5, 10, 15, 25, 35, 45,
+    2.5, 5, 10, 15, 25, 35, 45, 55,
   ]);
-  const [targetWeight, setTargetWeight] = useState<number>(225);
+  const [targetWeight, setTargetWeight] = useState<number>(0);
   const [loadout, setLoadout] = useState<Loadout>([]);
   const [totalPlateWeight, setTotalPlateWeight] = useState<number>(0);
 
   useEffect(() => {
-    const INITIAL_LOADOUT = generateLoadoutTemplate(availablePlates);
-    setLoadout(INITIAL_LOADOUT);
-  }, [availablePlates]);
+    setLoadout(calculateLoadout(barWeight, availablePlates, targetWeight));
+  }, [availablePlates, barWeight, targetWeight]);
 
   // Event Handlers
   const handleChangeBarWeight = (
