@@ -121,7 +121,7 @@ function App() {
   // Edit Buttons
 
   return (
-    <div className="App mx-2">
+    <div className="App">
       {/* Title */}
       <div className="title">
         <h1>Barbell Calculator</h1>
@@ -153,21 +153,21 @@ function App() {
 
         <div className="input__available-plates">
           <h2>Available Plates</h2>
-          <div className="flex flex-wrap">
-            <ToggleButtonGroup>
-              {plateValues.map((plate) => (
-                <ToggleButton
-                  key={plate.entry}
-                  value={plate.value}
-                  selected={inAvailablePlatesArr(plate.value, availablePlates)}
-                  onClick={handleChangeAvailablePlates}
-                >
-                  {plate.entry}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
-          </div>
+
+          <ToggleButtonGroup sx={{ display: 'flex', flexWrap: 'wrap' }}>
+            {plateValues.map((plate) => (
+              <ToggleButton
+                key={plate.entry}
+                value={plate.value}
+                selected={inAvailablePlatesArr(plate.value, availablePlates)}
+                onClick={handleChangeAvailablePlates}
+              >
+                {plate.entry}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
         </div>
+
         <div className="input__target-weight">
           <TextField
             label="Target Weight"
