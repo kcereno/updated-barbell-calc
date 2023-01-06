@@ -19,7 +19,8 @@ import {
   calculateLoadout,
   generateLoadoutTemplate,
 } from './data/functions';
-import { LoadoutEntry } from './data/interfaces';
+import { Loadout } from './data/types';
+import { calculateTotalPlateWeight } from './data/functions';
 
 function App() {
   const [barWeight, setBarWeight] = useState<number>(45);
@@ -27,7 +28,8 @@ function App() {
     2.5, 5, 10, 15, 25, 35, 45,
   ]);
   const [targetWeight, setTargetWeight] = useState<number>(225);
-  const [loadout, setLoadout] = useState<LoadoutEntry[]>([]);
+  const [loadout, setLoadout] = useState<Loadout>([]);
+  const [totalPlateWeight, setTotalPlateWeight] = useState<number>(0);
 
   useEffect(() => {
     const INITIAL_LOADOUT = generateLoadoutTemplate(availablePlates);
@@ -69,7 +71,16 @@ function App() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    calculateLoadout(barWeight, availablePlates, targetWeight);
+    const newLoadout = calculateLoadout(
+      barWeight,
+      availablePlates,
+      targetWeight
+    );
+
+    const newTotalPlateWeight = calculateTotalPlateWeight(newLoadout);
+
+    setTotalPlateWeight(newTotalPlateWeight);
+    setLoadout(newLoadout);
   };
 
   const handleReset = () => [
@@ -190,15 +201,17 @@ function App() {
               <TableRow>
                 <TableCell rowSpan={3} />
                 <TableCell colSpan={2}>Bar Weight</TableCell>
-                <TableCell align="center">45lbs</TableCell>
+                <TableCell align="center">{barWeight}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell colSpan={2}>Plate Weight</TableCell>
-                <TableCell align="center">200lbs</TableCell>
+                <TableCell align="center">{totalPlateWeight}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell colSpan={2}>Total Weight</TableCell>
-                <TableCell align="center">245lbs</TableCell>
+                <TableCell align="center">
+                  {barWeight + totalPlateWeight}
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
