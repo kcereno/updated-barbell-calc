@@ -84,14 +84,27 @@ function App() {
     setTargetWeight(0),
   ];
 
-  // Edit Buttons
-  const editButtons = () => {
-    return (
-      <ButtonGroup>
-        <Button>One</Button>
-      </ButtonGroup>
-    );
+  const handleClickAddButton = (plate: number) => {
+    const updatedLoadout = loadout.map((entry) => {
+      if (entry.plateValue === plate) {
+        return {
+          ...entry,
+          perSide: entry.perSide + 2,
+          netWeight: entry.netWeight + plate * 2,
+        };
+      } else {
+        return entry;
+      }
+    });
+    console.log('updatedLoadout ~ updatedLoadout', updatedLoadout);
+
+    const newTotalPlateWeight = calculateTotalPlateWeight(updatedLoadout);
+
+    setTotalPlateWeight(newTotalPlateWeight);
+    setLoadout(updatedLoadout);
   };
+
+  // Edit Buttons
 
   return (
     <div className="App mx-2">
@@ -184,7 +197,13 @@ function App() {
                   <TableCell align="right">
                     {
                       <ButtonGroup size="small">
-                        <Button>+</Button>
+                        <Button
+                          onClick={() => {
+                            handleClickAddButton(entry.plateValue);
+                          }}
+                        >
+                          +
+                        </Button>
                         <Button>-</Button>
                       </ButtonGroup>
                     }
