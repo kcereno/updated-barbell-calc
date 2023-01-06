@@ -31,6 +31,14 @@ function App() {
     setLoadout(calculateLoadout(barWeight, availablePlates, targetWeight));
   }, [availablePlates, barWeight, targetWeight]);
 
+  // Functions
+  const updateLoadout = (updatedLoadout: Loadout) => {
+    const updatedTotalPlateWeight = calculateTotalPlateWeight(updatedLoadout);
+
+    setTotalPlateWeight(updatedTotalPlateWeight);
+    setLoadout(updatedLoadout);
+  };
+
   // Event Handlers
   const handleChangeBarWeight = (
     event: React.MouseEvent<HTMLElement>,
@@ -72,10 +80,7 @@ function App() {
       targetWeight
     );
 
-    const newTotalPlateWeight = calculateTotalPlateWeight(newLoadout);
-
-    setTotalPlateWeight(newTotalPlateWeight);
-    setLoadout(newLoadout);
+    updateLoadout(newLoadout);
   };
 
   const handleReset = () => [
@@ -96,12 +101,24 @@ function App() {
         return entry;
       }
     });
-    console.log('updatedLoadout ~ updatedLoadout', updatedLoadout);
 
-    const newTotalPlateWeight = calculateTotalPlateWeight(updatedLoadout);
+    updateLoadout(updatedLoadout);
+  };
 
-    setTotalPlateWeight(newTotalPlateWeight);
-    setLoadout(updatedLoadout);
+  const handleClickSubtractButton = (plate: number) => {
+    const updatedLoadout = loadout.map((entry) => {
+      if (entry.plateValue === plate) {
+        return {
+          ...entry,
+          perSide: entry.perSide - 2,
+          netWeight: entry.netWeight - plate * 2,
+        };
+      } else {
+        return entry;
+      }
+    });
+
+    updateLoadout(updatedLoadout);
   };
 
   // Edit Buttons
@@ -204,7 +221,14 @@ function App() {
                         >
                           +
                         </Button>
-                        <Button>-</Button>
+                        <Button
+                          disabled={entry.perSide === 0}
+                          onClick={() => {
+                            handleClickSubtractButton(entry.plateValue);
+                          }}
+                        >
+                          -
+                        </Button>
                       </ButtonGroup>
                     }
                   </TableCell>
