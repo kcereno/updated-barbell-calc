@@ -123,18 +123,17 @@ function App() {
   return (
     <div className="App">
       {/* Title */}
-      <div className="title">
-        <h1>Barbell Calculator</h1>
-        <h3>By K</h3>
+      <div className="title text-center py-5 bg-slate-700 text-white mb-10">
+        <h1 className="text-3xl">Barbell Calculator</h1>
       </div>
 
       {/* Inputs */}
       <form
         onSubmit={handleSubmit}
-        className="inputs mb-5"
+        className="inputs mb-5 mx-3"
       >
-        <div className="input__bar-weight">
-          <h2>Bar Weight</h2>
+        <div className="input__bar-weight mb-5">
+          <h2 className="uppercase mb-2">Bar Weight</h2>
           <ToggleButtonGroup
             exclusive
             value={barWeight}
@@ -151,8 +150,8 @@ function App() {
           </ToggleButtonGroup>
         </div>
 
-        <div className="input__available-plates">
-          <h2>Available Plates</h2>
+        <div className="input__available-plates mb-5 ">
+          <h2 className="uppercase mb-3">Available Plates</h2>
 
           <ToggleButtonGroup sx={{ display: 'flex', flexWrap: 'wrap' }}>
             {plateValues.map((plate) => (
@@ -168,7 +167,7 @@ function App() {
           </ToggleButtonGroup>
         </div>
 
-        <div className="input__target-weight">
+        <div className="input__target-weight mb-5">
           <TextField
             label="Target Weight"
             variant="outlined"
