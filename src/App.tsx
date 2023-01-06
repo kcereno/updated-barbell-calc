@@ -1,3 +1,9 @@
+import './App.css';
+import { useEffect, useState } from 'react';
+import { plateValues, barWeights } from './data/variables';
+import { inAvailablePlatesArr, calculateLoadout } from './data/functions';
+import { Loadout } from './data/types';
+import { calculateTotalPlateWeight } from './data/functions';
 import {
   Table,
   ToggleButton,
@@ -11,16 +17,9 @@ import {
   ButtonGroup,
   Button,
 } from '@mui/material';
-import './App.css';
-import { useEffect, useState } from 'react';
-import { plateValues, barWeights } from './data/variables';
-import { inAvailablePlatesArr, calculateLoadout } from './data/functions';
-import { Loadout } from './data/types';
-import { calculateTotalPlateWeight } from './data/functions';
 
 function App() {
   const [barWeight, setBarWeight] = useState<number>(45);
-  console.log('App ~ barWeight', barWeight);
   const [availablePlates, setAvailablePlates] = useState<number[]>([
     2.5, 5, 10, 15, 25, 35, 45, 55,
   ]);
@@ -45,18 +44,13 @@ function App() {
     event: React.MouseEvent<HTMLElement>,
     newBarWeight: number
   ) => {
-    event.preventDefault();
-
-    if (newBarWeight || newBarWeight === 0) {
-      setBarWeight(newBarWeight);
-    }
+    if (newBarWeight || newBarWeight === 0) setBarWeight(newBarWeight);
   };
 
   const handleChangeAvailablePlates = (
     event: React.MouseEvent<HTMLElement, MouseEvent>,
     selectedPlate: number
   ) => {
-    event.preventDefault();
     let updatedAvailablePlates: number[] = [...availablePlates];
 
     inAvailablePlatesArr(selectedPlate, availablePlates)
@@ -101,9 +95,8 @@ function App() {
           perSide: entry.perSide + 2,
           netWeight: entry.netWeight + plate * 2,
         };
-      } else {
-        return entry;
       }
+      return entry;
     });
 
     updateLoadout(updatedLoadout);
