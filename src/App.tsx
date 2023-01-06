@@ -49,15 +49,9 @@ function App() {
 
   const handleChangeAvailablePlates = (
     event: React.MouseEvent<HTMLElement, MouseEvent>,
-    selectedPlate: number
+    updatedAvailablePlates: number[]
   ) => {
-    // let updatedAvailablePlates: number[] = [...availablePlates];
-    // inAvailablePlatesArr(selectedPlate, availablePlates)
-    //   ? (updatedAvailablePlates = updatedAvailablePlates.filter(
-    //       (plate) => plate !== selectedPlate
-    //     ))
-    //   : updatedAvailablePlates.push(selectedPlate);
-    // setAvailablePlates(updatedAvailablePlates);
+    setAvailablePlates(updatedAvailablePlates);
   };
 
   const handleChangeTargetWeight = (
@@ -138,6 +132,7 @@ function App() {
             onChange={handleChangeBarWeight}
             size="large"
             color="primary"
+            fullWidth
           >
             {barWeights.map((bar) => (
               <ToggleButton
@@ -157,6 +152,8 @@ function App() {
               value={availablePlates}
               onChange={handleChangeAvailablePlates}
               color="primary"
+              size="large"
+              fullWidth
             >
               {plateValues.map((plate, index) => {
                 if (index < 4)
@@ -177,6 +174,8 @@ function App() {
               value={availablePlates}
               onChange={handleChangeAvailablePlates}
               color="primary"
+              size="large"
+              fullWidth
             >
               {plateValues.map((plate, index) => {
                 if (index >= 4)
@@ -204,11 +203,20 @@ function App() {
             onChange={handleChangeTargetWeight}
           />
         </div>
-        <div className="buttons">
-          <Button type="submit">Calculate</Button>
+        <div className="buttons flex gap-1">
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+          >
+            Calculate
+          </Button>
           <Button
             type="reset"
             onClick={handleReset}
+            variant="outlined"
+            color="error"
+            size="large"
           >
             Reset
           </Button>
