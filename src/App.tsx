@@ -224,13 +224,13 @@ function App() {
       </form>
 
       {/* Results */}
-      <div className="resuts">
+      <div className="resultts">
         <TableContainer>
-          <Table>
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell>Plate</TableCell>
-                <TableCell align="right">Edit</TableCell>
+                <TableCell align="center">Edit</TableCell>
                 <TableCell align="right">Per Side</TableCell>
                 <TableCell align="right">Net Weight</TableCell>
               </TableRow>
@@ -270,16 +270,24 @@ function App() {
                 </TableRow>
               ))}
               <TableRow>
-                <TableCell rowSpan={3} />
-                <TableCell colSpan={2}>Bar Weight</TableCell>
+                <TableCell colSpan={2} />
+                <TableCell colSpan={1}>
+                  <span className="font-bold">Bar</span>
+                </TableCell>
                 <TableCell align="center">{barWeight}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell colSpan={2}>Plate Weight</TableCell>
+                <TableCell colSpan={2} />
+                <TableCell colSpan={1}>
+                  <span className="font-bold">Plates</span>
+                </TableCell>
                 <TableCell align="center">{totalPlateWeight}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell colSpan={2}>Total Weight</TableCell>
+                <TableCell colSpan={2} />
+                <TableCell colSpan={1}>
+                  <span className="font-bold">Total</span>
+                </TableCell>
                 <TableCell align="center">
                   {barWeight + totalPlateWeight}
                 </TableCell>
