@@ -51,15 +51,13 @@ function App() {
     event: React.MouseEvent<HTMLElement, MouseEvent>,
     selectedPlate: number
   ) => {
-    let updatedAvailablePlates: number[] = [...availablePlates];
-
-    inAvailablePlatesArr(selectedPlate, availablePlates)
-      ? (updatedAvailablePlates = updatedAvailablePlates.filter(
-          (plate) => plate !== selectedPlate
-        ))
-      : updatedAvailablePlates.push(selectedPlate);
-
-    setAvailablePlates(updatedAvailablePlates);
+    // let updatedAvailablePlates: number[] = [...availablePlates];
+    // inAvailablePlatesArr(selectedPlate, availablePlates)
+    //   ? (updatedAvailablePlates = updatedAvailablePlates.filter(
+    //       (plate) => plate !== selectedPlate
+    //     ))
+    //   : updatedAvailablePlates.push(selectedPlate);
+    // setAvailablePlates(updatedAvailablePlates);
   };
 
   const handleChangeTargetWeight = (
@@ -121,7 +119,7 @@ function App() {
   // Edit Buttons
 
   return (
-    <div className="App">
+    <div className="App ">
       {/* Title */}
       <div className="title text-center py-5 bg-slate-700 text-white mb-10">
         <h1 className="text-3xl">Barbell Calculator</h1>
@@ -138,6 +136,8 @@ function App() {
             exclusive
             value={barWeight}
             onChange={handleChangeBarWeight}
+            size="large"
+            color="primary"
           >
             {barWeights.map((bar) => (
               <ToggleButton
@@ -152,19 +152,48 @@ function App() {
 
         <div className="input__available-plates mb-5 ">
           <h2 className="uppercase mb-3">Available Plates</h2>
+          <div className="flex flex-col">
+            <ToggleButtonGroup
+              value={availablePlates}
+              onChange={handleChangeAvailablePlates}
+              color="primary"
+            >
+              {plateValues.map((plate, index) => {
+                if (index < 4)
+                  return (
+                    <ToggleButton
+                      key={plate}
+                      value={plate}
+                      selected={inAvailablePlatesArr(plate, availablePlates)}
+                    >
+                      {`${plate} lbs`}
+                    </ToggleButton>
+                  );
 
-          <ToggleButtonGroup sx={{ display: 'flex', flexWrap: 'wrap' }}>
-            {plateValues.map((plate) => (
-              <ToggleButton
-                key={plate.entry}
-                value={plate.value}
-                selected={inAvailablePlatesArr(plate.value, availablePlates)}
-                onClick={handleChangeAvailablePlates}
-              >
-                {plate.entry}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
+                return null;
+              })}
+            </ToggleButtonGroup>
+            <ToggleButtonGroup
+              value={availablePlates}
+              onChange={handleChangeAvailablePlates}
+              color="primary"
+            >
+              {plateValues.map((plate, index) => {
+                if (index >= 4)
+                  return (
+                    <ToggleButton
+                      key={plate}
+                      value={plate}
+                      selected={inAvailablePlatesArr(plate, availablePlates)}
+                    >
+                      {`${plate} lbs`}
+                    </ToggleButton>
+                  );
+
+                return null;
+              })}
+            </ToggleButtonGroup>
+          </div>
         </div>
 
         <div className="input__target-weight mb-5">
