@@ -3,8 +3,8 @@ export interface PlateValue {
   value: number;
 }
 
-export interface DataEntry {
-  plateValue: string;
+export interface LoadoutEntry {
+  plateValue: number;
   perSide: number;
   netWeight: number;
 }

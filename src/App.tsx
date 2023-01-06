@@ -12,14 +12,27 @@ import {
   Button,
 } from '@mui/material';
 import './App.css';
-import { useState } from 'react';
-import { plateValues, data } from './data/variables';
-import { inAvailablePlatesArr } from './data/functions';
+import { useEffect, useState } from 'react';
+import { plateValues, barWeights } from './data/variables';
+import {
+  inAvailablePlatesArr,
+  calculateLoadout,
+  generateLoadoutTemplate,
+} from './data/functions';
+import { LoadoutEntry } from './data/interfaces';
 
 function App() {
-  const [barWeight, setBarWeight] = useState<number>(0);
-  const [availablePlates, setAvailablePlates] = useState<number[]>([]);
-  const [targetWeight, setTargetWeight] = useState<number>();
+  const [barWeight, setBarWeight] = useState<number>(45);
+  const [availablePlates, setAvailablePlates] = useState<number[]>([
+    2.5, 5, 10, 15, 25, 35, 45,
+  ]);
+  const [targetWeight, setTargetWeight] = useState<number>(225);
+  const [loadout, setLoadout] = useState<LoadoutEntry[]>([]);
+
+  useEffect(() => {
+    const INITIAL_LOADOUT = generateLoadoutTemplate(availablePlates);
+    setLoadout(INITIAL_LOADOUT);
+  }, [availablePlates]);
 
   // Event Handlers
   const handleChangeBarWeight = (
@@ -55,17 +68,14 @@ function App() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = {
-      barWeight,
-      availablePlates,
-      targetWeight,
-    };
+
+    calculateLoadout(barWeight, availablePlates, targetWeight);
   };
 
   const handleReset = () => [
     setBarWeight(0),
     setAvailablePlates([]),
-    setTargetWeight(undefined),
+    setTargetWeight(0),
   ];
 
   // Edit Buttons
@@ -97,10 +107,14 @@ function App() {
             value={barWeight}
             onChange={handleChangeBarWeight}
           >
-            <ToggleButton value="0">No Bar</ToggleButton>
-            <ToggleButton value="35">35 lbs</ToggleButton>
-            <ToggleButton value="45">45 lbs</ToggleButton>
-            <ToggleButton value="60">60 lbs</ToggleButton>
+            {barWeights.map((bar) => (
+              <ToggleButton
+                key={bar.entry}
+                value={bar.value}
+              >
+                {bar.entry}
+              </ToggleButton>
+            ))}
           </ToggleButtonGroup>
         </div>
 
@@ -141,7 +155,7 @@ function App() {
       </form>
 
       {/* Results */}
-      {/* <div className="resuts">
+      <div className="resuts">
         <TableContainer>
           <Table>
             <TableHead>
@@ -153,7 +167,7 @@ function App() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((entry) => (
+              {loadout.map((entry) => (
                 <TableRow key={entry.plateValue}>
                   <TableCell
                     component="th"
@@ -189,7 +203,7 @@ function App() {
             </TableBody>
           </Table>
         </TableContainer>
-      </div> */}
+      </div>
     </div>
   );
 }
