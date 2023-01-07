@@ -134,12 +134,12 @@ function App() {
   };
 
   return (
-    <div className="app__container relative min-h-screen">
-      <div className="app__content pb-20">
+    <Box className="app__container relative min-h-screen">
+      <Box className="app__content pb-20">
         {/* Title */}
-        <div className="title text-center py-5 bg-slate-700 text-white mb-8">
+        <Box className="title text-center py-5 bg-slate-700 text-white mb-8">
           <h1 className="text-3xl">Barbell Calculator</h1>
-        </div>
+        </Box>
 
         {/* Inputs */}
         <Box
@@ -147,7 +147,7 @@ function App() {
           className="mx-3 mb-8"
           onSubmit={handleSubmit}
         >
-          <div className="input__bar-weight mb-4">
+          <Box className="input__bar-weight mb-4">
             <h2 className="uppercase mb-2">Bar Weight</h2>
             <ToggleButtonGroup
               exclusive
@@ -165,11 +165,11 @@ function App() {
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
-          </div>
+          </Box>
 
-          <div className="input__available-plates mb-6 ">
+          <Box className="input__available-plates mb-6 ">
             <h2 className="uppercase mb-2">Available Plates</h2>
-            <div className="flex flex-col">
+            <Box className="flex flex-col">
               <ToggleButtonGroup
                 value={availablePlates}
                 onChange={handleChangeAvailablePlates}
@@ -212,10 +212,10 @@ function App() {
                   return null;
                 })}
               </ToggleButtonGroup>
-            </div>
-          </div>
+            </Box>
+          </Box>
 
-          <div className="input__target-weight mb-6">
+          <Box className="input__target-weight mb-6">
             <TextField
               label="Target Weight"
               variant="outlined"
@@ -225,8 +225,8 @@ function App() {
               error={!formIsValid}
               helperText={!formIsValid && errorMessage}
             />
-          </div>
-          <div className="buttons flex gap-1 justify-center">
+          </Box>
+          <Box className="buttons flex gap-1 justify-center">
             <Button
               type="submit"
               variant="contained"
@@ -243,12 +243,12 @@ function App() {
             >
               Reset
             </Button>
-          </div>
+          </Box>
         </Box>
 
         {/* Results */}
         {availablePlates.length > 0 && (
-          <div className="results mb-10">
+          <Box className="results mb-10">
             <TableContainer>
               <Table size="small">
                 <TableHead>
@@ -319,13 +319,13 @@ function App() {
                 </TableBody>
               </Table>
             </TableContainer>
-          </div>
+          </Box>
         )}
-      </div>
+      </Box>
       <footer className=" bg-slate-800 text-white text-center absolute bottom-0 w-full h-20 flex justify-center items-center">
         <p className="text-xs">{`Karl Cereno ${currentYear}`}</p>
       </footer>
-    </div>
+    </Box>
   );
 }
 
