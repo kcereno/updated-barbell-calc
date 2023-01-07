@@ -84,7 +84,7 @@ function App() {
       if (entry.plateValue === plate) {
         return {
           ...entry,
-          perSide: entry.perSide + 2,
+          perSide: entry.perSide + 1,
           netWeight: entry.netWeight + plate * 2,
         };
       }
@@ -99,7 +99,7 @@ function App() {
       if (entry.plateValue === plate) {
         return {
           ...entry,
-          perSide: entry.perSide - 2,
+          perSide: entry.perSide - 1,
           netWeight: entry.netWeight - plate * 2,
         };
       } else {
