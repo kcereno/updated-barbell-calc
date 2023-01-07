@@ -1,5 +1,3 @@
-import { PlateValue } from './interfaces';
-
 export const barWeights = [
   { entry: 'No Bar', value: 0 },
   { entry: '35lbs', value: 35 },
@@ -8,3 +6,5 @@ export const barWeights = [
 ];
 
 export const plateValues: number[] = [2.5, 5, 10, 15, 25, 35, 45, 55];
+
+export const currentYear = new Date().getFullYear();

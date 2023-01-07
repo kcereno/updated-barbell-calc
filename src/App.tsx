@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { plateValues, barWeights } from './data/variables';
+import { plateValues, barWeights, currentYear } from './data/variables';
 import { inAvailablePlatesArr, calculateLoadout } from './data/functions';
 import { Loadout } from './data/types';
 import { calculateTotalPlateWeight } from './data/functions';
@@ -113,186 +113,191 @@ function App() {
   // Edit Buttons
 
   return (
-    <div className="App ">
-      {/* Title */}
-      <div className="title text-center py-5 bg-slate-700 text-white mb-10">
-        <h1 className="text-3xl">Barbell Calculator</h1>
-      </div>
-
-      {/* Inputs */}
-      <form
-        onSubmit={handleSubmit}
-        className="inputs mb-5 mx-3"
-      >
-        <div className="input__bar-weight mb-5">
-          <h2 className="uppercase mb-2">Bar Weight</h2>
-          <ToggleButtonGroup
-            exclusive
-            value={barWeight}
-            onChange={handleChangeBarWeight}
-            color="primary"
-            fullWidth
-          >
-            {barWeights.map((bar) => (
-              <ToggleButton
-                key={bar.entry}
-                value={bar.value}
-              >
-                {bar.entry}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
+    <div className="app__container relative min-h-screen">
+      <div className="app__content pb-20">
+        {/* Title */}
+        <div className="title text-center py-5 bg-slate-700 text-white mb-5">
+          <h1 className="text-3xl">Barbell Calculator</h1>
         </div>
 
-        <div className="input__available-plates mb-5 ">
-          <h2 className="uppercase mb-3">Available Plates</h2>
-          <div className="flex flex-col">
+        {/* Inputs */}
+        <form
+          onSubmit={handleSubmit}
+          className="inputs mb-10 mx-3"
+        >
+          <div className="input__bar-weight mb-5">
+            <h2 className="uppercase mb-2">Bar Weight</h2>
             <ToggleButtonGroup
-              value={availablePlates}
-              onChange={handleChangeAvailablePlates}
+              exclusive
+              value={barWeight}
+              onChange={handleChangeBarWeight}
               color="primary"
               fullWidth
             >
-              {plateValues.map((plate, index) => {
-                if (index < 4)
-                  return (
-                    <ToggleButton
-                      key={plate}
-                      value={plate}
-                      selected={inAvailablePlatesArr(plate, availablePlates)}
-                    >
-                      {`${plate} lbs`}
-                    </ToggleButton>
-                  );
-
-                return null;
-              })}
-            </ToggleButtonGroup>
-            <ToggleButtonGroup
-              value={availablePlates}
-              onChange={handleChangeAvailablePlates}
-              color="primary"
-              fullWidth
-            >
-              {plateValues.map((plate, index) => {
-                if (index >= 4)
-                  return (
-                    <ToggleButton
-                      key={plate}
-                      value={plate}
-                      selected={inAvailablePlatesArr(plate, availablePlates)}
-                    >
-                      {`${plate} lbs`}
-                    </ToggleButton>
-                  );
-
-                return null;
-              })}
+              {barWeights.map((bar) => (
+                <ToggleButton
+                  key={bar.entry}
+                  value={bar.value}
+                >
+                  {bar.entry}
+                </ToggleButton>
+              ))}
             </ToggleButtonGroup>
           </div>
-        </div>
 
-        <div className="input__target-weight mb-5">
-          <TextField
-            label="Target Weight"
-            variant="outlined"
-            fullWidth
-            onChange={handleChangeTargetWeight}
-          />
-        </div>
-        <div className="buttons flex gap-1 justify-center">
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-          >
-            Calculate
-          </Button>
-          <Button
-            type="reset"
-            onClick={handleReset}
-            variant="outlined"
-            color="error"
-            size="large"
-          >
-            Reset
-          </Button>
-        </div>
-      </form>
+          <div className="input__available-plates mb-5 ">
+            <h2 className="uppercase mb-3">Available Plates</h2>
+            <div className="flex flex-col">
+              <ToggleButtonGroup
+                value={availablePlates}
+                onChange={handleChangeAvailablePlates}
+                color="primary"
+                fullWidth
+              >
+                {plateValues.map((plate, index) => {
+                  if (index < 4)
+                    return (
+                      <ToggleButton
+                        key={plate}
+                        value={plate}
+                        selected={inAvailablePlatesArr(plate, availablePlates)}
+                      >
+                        {`${plate} lbs`}
+                      </ToggleButton>
+                    );
 
-      {/* Results */}
-      <div className="resultts">
-        <TableContainer>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>Plate</TableCell>
-                <TableCell align="center">Edit</TableCell>
-                <TableCell align="right">Per Side</TableCell>
-                <TableCell align="right">Net Weight</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {loadout.map((entry) => (
-                <TableRow key={entry.plateValue}>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                  >
-                    {entry.plateValue}
-                  </TableCell>
-                  <TableCell align="right">
-                    {
-                      <ButtonGroup size="small">
-                        <Button
-                          onClick={() => {
-                            handleClickAddButton(entry.plateValue);
-                          }}
-                        >
-                          +
-                        </Button>
-                        <Button
-                          disabled={entry.perSide === 0}
-                          onClick={() => {
-                            handleClickSubtractButton(entry.plateValue);
-                          }}
-                        >
-                          -
-                        </Button>
-                      </ButtonGroup>
-                    }
-                  </TableCell>
-                  <TableCell align="right">{entry.perSide}</TableCell>
-                  <TableCell align="right">{entry.netWeight}</TableCell>
+                  return null;
+                })}
+              </ToggleButtonGroup>
+              <ToggleButtonGroup
+                value={availablePlates}
+                onChange={handleChangeAvailablePlates}
+                color="primary"
+                fullWidth
+              >
+                {plateValues.map((plate, index) => {
+                  if (index >= 4)
+                    return (
+                      <ToggleButton
+                        key={plate}
+                        value={plate}
+                        selected={inAvailablePlatesArr(plate, availablePlates)}
+                      >
+                        {`${plate} lbs`}
+                      </ToggleButton>
+                    );
+
+                  return null;
+                })}
+              </ToggleButtonGroup>
+            </div>
+          </div>
+
+          <div className="input__target-weight mb-5">
+            <TextField
+              label="Target Weight"
+              variant="outlined"
+              fullWidth
+              onChange={handleChangeTargetWeight}
+            />
+          </div>
+          <div className="buttons flex gap-1 justify-center">
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+            >
+              Calculate
+            </Button>
+            <Button
+              type="reset"
+              onClick={handleReset}
+              variant="outlined"
+              color="error"
+              size="large"
+            >
+              Reset
+            </Button>
+          </div>
+        </form>
+
+        {/* Results */}
+        <div className="results mb-10">
+          <TableContainer>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Plate</TableCell>
+                  <TableCell align="center">Edit</TableCell>
+                  <TableCell align="right">Per Side</TableCell>
+                  <TableCell align="right">Net Weight</TableCell>
                 </TableRow>
-              ))}
-              <TableRow>
-                <TableCell colSpan={2} />
-                <TableCell colSpan={1}>
-                  <span className="font-bold">Bar</span>
-                </TableCell>
-                <TableCell align="center">{barWeight}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell colSpan={2} />
-                <TableCell colSpan={1}>
-                  <span className="font-bold">Plates</span>
-                </TableCell>
-                <TableCell align="center">{totalPlateWeight}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell colSpan={2} />
-                <TableCell colSpan={1}>
-                  <span className="font-bold">Total</span>
-                </TableCell>
-                <TableCell align="center">
-                  {barWeight + totalPlateWeight}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {loadout.map((entry) => (
+                  <TableRow key={entry.plateValue}>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                    >
+                      {entry.plateValue}
+                    </TableCell>
+                    <TableCell align="right">
+                      {
+                        <ButtonGroup size="small">
+                          <Button
+                            onClick={() => {
+                              handleClickAddButton(entry.plateValue);
+                            }}
+                          >
+                            +
+                          </Button>
+                          <Button
+                            disabled={entry.perSide === 0}
+                            onClick={() => {
+                              handleClickSubtractButton(entry.plateValue);
+                            }}
+                          >
+                            -
+                          </Button>
+                        </ButtonGroup>
+                      }
+                    </TableCell>
+                    <TableCell align="right">{entry.perSide}</TableCell>
+                    <TableCell align="right">{entry.netWeight}</TableCell>
+                  </TableRow>
+                ))}
+                <TableRow>
+                  <TableCell colSpan={2} />
+                  <TableCell colSpan={1}>
+                    <span className="font-bold">Bar</span>
+                  </TableCell>
+                  <TableCell align="center">{barWeight}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={2} />
+                  <TableCell colSpan={1}>
+                    <span className="font-bold">Plates</span>
+                  </TableCell>
+                  <TableCell align="center">{totalPlateWeight}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan={2} />
+                  <TableCell colSpan={1}>
+                    <span className="font-bold">Total</span>
+                  </TableCell>
+                  <TableCell align="center">
+                    {barWeight + totalPlateWeight}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
       </div>
+      <footer className=" bg-slate-800 text-white text-center absolute bottom-0 w-full h-20 flex justify-center items-center">
+        <p className="text-xs">{`Karl Cereno ${currentYear}`}</p>
+      </footer>
     </div>
   );
 }
