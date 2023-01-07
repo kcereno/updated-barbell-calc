@@ -130,7 +130,6 @@ function App() {
             exclusive
             value={barWeight}
             onChange={handleChangeBarWeight}
-            size="large"
             color="primary"
             fullWidth
           >
@@ -152,7 +151,6 @@ function App() {
               value={availablePlates}
               onChange={handleChangeAvailablePlates}
               color="primary"
-              size="large"
               fullWidth
             >
               {plateValues.map((plate, index) => {
@@ -174,7 +172,6 @@ function App() {
               value={availablePlates}
               onChange={handleChangeAvailablePlates}
               color="primary"
-              size="large"
               fullWidth
             >
               {plateValues.map((plate, index) => {
