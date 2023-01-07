@@ -200,7 +200,7 @@ function App() {
             onChange={handleChangeTargetWeight}
           />
         </div>
-        <div className="buttons flex gap-1">
+        <div className="buttons flex gap-1 justify-center">
           <Button
             type="submit"
             variant="contained"
