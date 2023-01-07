@@ -4,6 +4,7 @@ import { plateValues, barWeights, currentYear } from './data/variables';
 import { inAvailablePlatesArr, calculateLoadout } from './data/functions';
 import { Loadout } from './data/types';
 import { calculateTotalPlateWeight } from './data/functions';
+import { Box } from '@mui/material';
 import {
   Table,
   ToggleButton,
@@ -26,6 +27,8 @@ function App() {
   const [targetWeight, setTargetWeight] = useState<number>(0);
   const [loadout, setLoadout] = useState<Loadout>([]);
   const [totalPlateWeight, setTotalPlateWeight] = useState<number>(0);
+  const [formIsValid, setFormIsValid] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
     setLoadout(calculateLoadout(barWeight, availablePlates, targetWeight));
@@ -64,12 +67,31 @@ function App() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (availablePlates.length === 0) {
+      setErrorMessage('At lest one plate must be selected');
+      setFormIsValid(false);
+      return;
+    }
+
+    if (targetWeight !== barWeight + totalPlateWeight) {
+      setErrorMessage(
+        'Target Weight cannot be reached with current plates. Closest possible weight given instead'
+      );
+      setFormIsValid(false);
+      return;
+    }
+    if (targetWeight < barWeight) {
+      setErrorMessage('Target Weight must be greater than Bar Weight');
+      setFormIsValid(false);
+      return;
+    }
+
     const newLoadout = calculateLoadout(
       barWeight,
       availablePlates,
       targetWeight
     );
-
+    setFormIsValid(true);
     updateLoadout(newLoadout);
   };
 
@@ -77,6 +99,7 @@ function App() {
     setBarWeight(0),
     setAvailablePlates([]),
     setTargetWeight(0),
+    setFormIsValid(true),
   ];
 
   const handleClickAddButton = (plate: number) => {
@@ -110,8 +133,6 @@ function App() {
     updateLoadout(updatedLoadout);
   };
 
-  // Edit Buttons
-
   return (
     <div className="app__container relative min-h-screen">
       <div className="app__content pb-20">
@@ -121,9 +142,10 @@ function App() {
         </div>
 
         {/* Inputs */}
-        <form
+        <Box
+          component="form"
+          className="mx-3 mb-10"
           onSubmit={handleSubmit}
-          className="inputs mb-10 mx-3"
         >
           <div className="input__bar-weight mb-5">
             <h2 className="uppercase mb-2">Bar Weight</h2>
@@ -146,7 +168,7 @@ function App() {
           </div>
 
           <div className="input__available-plates mb-5 ">
-            <h2 className="uppercase mb-3">Available Plates</h2>
+            <h2 className="uppercase mb-2">Available Plates</h2>
             <div className="flex flex-col">
               <ToggleButtonGroup
                 value={availablePlates}
@@ -199,6 +221,9 @@ function App() {
               variant="outlined"
               fullWidth
               onChange={handleChangeTargetWeight}
+              type="number"
+              error={!formIsValid}
+              helperText={!formIsValid && errorMessage}
             />
           </div>
           <div className="buttons flex gap-1 justify-center">
@@ -219,7 +244,7 @@ function App() {
               Reset
             </Button>
           </div>
-        </form>
+        </Box>
 
         {/* Results */}
         <div className="results mb-10">
