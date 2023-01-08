@@ -11,7 +11,11 @@ import { inPlatesArr, calculateLoadout } from './data/functions';
 import { Loadout } from './data/types';
 import { calculateTotalPlateWeight } from './data/functions';
 import { Box } from '@mui/material';
-import { INITIAL_PLATES, INITIAL_TARGET_WEIGHT } from './data/variables';
+import {
+  INITIAL_PLATES,
+  INITIAL_TARGET_WEIGHT,
+  INITIAL_INPUT_DATA,
+} from './data/variables';
 import {
   Table,
   ToggleButton,
@@ -25,24 +29,21 @@ import {
   ButtonGroup,
   Button,
 } from '@mui/material';
-import { Title } from '@mui/icons-material';
+import Form from './sections/Form';
 import Navbar from './sections/Navbar';
+import { InputData } from './data/interfaces';
 
 function App() {
-  const [barWeight, setBarWeight] = useState<number>(INITIAL_BAR_WEIGHT);
-  const [plates, setPlates] = useState<number[]>(INITIAL_PLATES);
-  const [targetWeight, setTargetWeight] = useState<number>(
-    INITIAL_TARGET_WEIGHT
-  );
   const [loadout, setLoadout] = useState<Loadout>(INITIAL_LOADOUT);
+  console.log('App ~ loadout', loadout);
+  const [inputData, setInputData] = useState<InputData>(INITIAL_INPUT_DATA);
+  console.log('App ~ inputData', inputData);
 
   const [totalPlateWeight, setTotalPlateWeight] = useState<number>(0);
-  const [formIsValid, setFormIsValid] = useState<boolean>(true);
-  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  useEffect(() => {
-    setLoadout(calculateLoadout(barWeight, plates, targetWeight));
-  }, [plates, barWeight, targetWeight]);
+  // useEffect(() => {
+  //   setLoadout(calculateLoadout(barWeight, plates, targetWeight));
+  // }, [plates, barWeight, targetWeight]);
 
   // Functions
   const updateLoadout = (updatedLoadout: Loadout) => {
@@ -52,54 +53,11 @@ function App() {
     setLoadout(updatedLoadout);
   };
 
+  const updateInputData = (updatedInputData: InputData) => {
+    setInputData(updatedInputData);
+  };
+
   // Event Handlers
-  const handleChangeBarWeight = (
-    event: React.MouseEvent<HTMLElement>,
-    newBarWeight: number
-  ) => {
-    if (newBarWeight || newBarWeight === 0) setBarWeight(newBarWeight);
-  };
-
-  const handleChangeplates = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>,
-    updatedplates: number[]
-  ) => {
-    setPlates(updatedplates);
-  };
-
-  const handleChangeTargetWeight = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const updatedTargetWeight = event.target.value;
-    setTargetWeight(Number(updatedTargetWeight));
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (plates.length === 0) {
-      setErrorMessage('At lest one plate must be selected');
-      setFormIsValid(false);
-      return;
-    }
-
-    if (targetWeight < barWeight) {
-      setErrorMessage('Target Weight must be greater than Bar Weight');
-      setFormIsValid(false);
-      return;
-    }
-
-    const newLoadout = calculateLoadout(barWeight, plates, targetWeight);
-    setFormIsValid(true);
-    updateLoadout(newLoadout);
-  };
-
-  const handleReset = () => [
-    setBarWeight(0),
-    setPlates([]),
-    setTargetWeight(0),
-    setFormIsValid(true),
-  ];
 
   const handleClickAddButton = (plate: number) => {
     const updatedLoadout = loadout.map((entry) => {
@@ -138,112 +96,13 @@ function App() {
         {/* Title */}
         <Navbar />
         <Box className="max-w-3xl mx-auto">
-          <Box
-            component="form"
-            className="mx-3 mb-8"
-            onSubmit={handleSubmit}
-          >
-            <Box className="input__bar-weight mb-4">
-              <h2 className="uppercase mb-2">Bar Weight</h2>
-              <ToggleButtonGroup
-                exclusive
-                value={barWeight}
-                onChange={handleChangeBarWeight}
-                color="primary"
-                fullWidth
-              >
-                {barWeights.map((bar) => (
-                  <ToggleButton
-                    key={bar.entry}
-                    value={bar.value}
-                  >
-                    {bar.entry}
-                  </ToggleButton>
-                ))}
-              </ToggleButtonGroup>
-            </Box>
-
-            <Box className="input__available-plates mb-6 ">
-              <h2 className="uppercase mb-2">Available Plates</h2>
-              <Box className="flex flex-col">
-                <ToggleButtonGroup
-                  value={plates}
-                  onChange={handleChangeplates}
-                  color="primary"
-                  fullWidth
-                >
-                  {plateValues.map((plate, index) => {
-                    if (index < 4)
-                      return (
-                        <ToggleButton
-                          key={plate}
-                          value={plate}
-                          selected={inPlatesArr(plate, plates)}
-                        >
-                          {`${plate} lbs`}
-                        </ToggleButton>
-                      );
-
-                    return null;
-                  })}
-                </ToggleButtonGroup>
-                <ToggleButtonGroup
-                  value={plates}
-                  onChange={handleChangeplates}
-                  color="primary"
-                  fullWidth
-                >
-                  {plateValues.map((plate, index) => {
-                    if (index >= 4)
-                      return (
-                        <ToggleButton
-                          key={plate}
-                          value={plate}
-                          selected={inPlatesArr(plate, plates)}
-                        >
-                          {`${plate} lbs`}
-                        </ToggleButton>
-                      );
-
-                    return null;
-                  })}
-                </ToggleButtonGroup>
-              </Box>
-            </Box>
-
-            <Box className="input__target-weight mb-6">
-              <TextField
-                label="Target Weight"
-                variant="outlined"
-                fullWidth
-                onChange={handleChangeTargetWeight}
-                type="number"
-                error={!formIsValid}
-                helperText={!formIsValid && errorMessage}
-              />
-            </Box>
-            <Box className="buttons flex gap-1 justify-center">
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-              >
-                Calculate
-              </Button>
-              <Button
-                type="reset"
-                onClick={handleReset}
-                variant="outlined"
-                color="error"
-                size="large"
-              >
-                Reset
-              </Button>
-            </Box>
-          </Box>
+          <Form
+            updateLoadout={updateLoadout}
+            updateInputData={updateInputData}
+          />
 
           {/* Results */}
-          {plates.length > 0 && (
+          {/* {plates.length > 0 && (
             <Box className="results mb-10">
               <TableContainer>
                 <Table size="small">
@@ -316,7 +175,7 @@ function App() {
                 </Table>
               </TableContainer>
             </Box>
-          )}
+          )} */}
         </Box>
       </Box>
       <footer className=" bg-slate-800 text-white text-center absolute bottom-0 w-full h-20 flex justify-center items-center">
