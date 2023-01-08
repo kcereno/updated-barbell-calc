@@ -1,10 +1,17 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { plateValues, barWeights, currentYear } from './data/variables';
-import { inAvailablePlatesArr, calculateLoadout } from './data/functions';
+import {
+  plateValues,
+  barWeights,
+  currentYear,
+  INITIAL_BAR_WEIGHT,
+  INITIAL_LOADOUT,
+} from './data/variables';
+import { inplatesArr, calculateLoadout } from './data/functions';
 import { Loadout } from './data/types';
 import { calculateTotalPlateWeight } from './data/functions';
 import { Box } from '@mui/material';
+import { INITIAL_PLATES, INITIAL_TARGET_WEIGHT } from './data/variables';
 import {
   Table,
   ToggleButton,
@@ -20,19 +27,20 @@ import {
 } from '@mui/material';
 
 function App() {
-  const [barWeight, setBarWeight] = useState<number>(45);
-  const [availablePlates, setAvailablePlates] = useState<number[]>([
-    2.5, 5, 10, 15, 25, 35, 45, 55,
-  ]);
-  const [targetWeight, setTargetWeight] = useState<number>(0);
-  const [loadout, setLoadout] = useState<Loadout>([]);
+  const [barWeight, setBarWeight] = useState<number>(INITIAL_BAR_WEIGHT);
+  const [plates, setPlates] = useState<number[]>(INITIAL_PLATES);
+  const [targetWeight, setTargetWeight] = useState<number>(
+    INITIAL_TARGET_WEIGHT
+  );
+  const [loadout, setLoadout] = useState<Loadout>(INITIAL_LOADOUT);
+
   const [totalPlateWeight, setTotalPlateWeight] = useState<number>(0);
   const [formIsValid, setFormIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
-    setLoadout(calculateLoadout(barWeight, availablePlates, targetWeight));
-  }, [availablePlates, barWeight, targetWeight]);
+    setLoadout(calculateLoadout(barWeight, plates, targetWeight));
+  }, [plates, barWeight, targetWeight]);
 
   // Functions
   const updateLoadout = (updatedLoadout: Loadout) => {
@@ -50,11 +58,11 @@ function App() {
     if (newBarWeight || newBarWeight === 0) setBarWeight(newBarWeight);
   };
 
-  const handleChangeAvailablePlates = (
+  const handleChangeplates = (
     event: React.MouseEvent<HTMLElement, MouseEvent>,
-    updatedAvailablePlates: number[]
+    updatedplates: number[]
   ) => {
-    setAvailablePlates(updatedAvailablePlates);
+    setPlates(updatedplates);
   };
 
   const handleChangeTargetWeight = (
@@ -67,7 +75,7 @@ function App() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (availablePlates.length === 0) {
+    if (plates.length === 0) {
       setErrorMessage('At lest one plate must be selected');
       setFormIsValid(false);
       return;
@@ -79,18 +87,14 @@ function App() {
       return;
     }
 
-    const newLoadout = calculateLoadout(
-      barWeight,
-      availablePlates,
-      targetWeight
-    );
+    const newLoadout = calculateLoadout(barWeight, plates, targetWeight);
     setFormIsValid(true);
     updateLoadout(newLoadout);
   };
 
   const handleReset = () => [
     setBarWeight(0),
-    setAvailablePlates([]),
+    setPlates([]),
     setTargetWeight(0),
     setFormIsValid(true),
   ];
@@ -163,8 +167,8 @@ function App() {
               <h2 className="uppercase mb-2">Available Plates</h2>
               <Box className="flex flex-col">
                 <ToggleButtonGroup
-                  value={availablePlates}
-                  onChange={handleChangeAvailablePlates}
+                  value={plates}
+                  onChange={handleChangeplates}
                   color="primary"
                   fullWidth
                 >
@@ -174,10 +178,7 @@ function App() {
                         <ToggleButton
                           key={plate}
                           value={plate}
-                          selected={inAvailablePlatesArr(
-                            plate,
-                            availablePlates
-                          )}
+                          selected={inplatesArr(plate, plates)}
                         >
                           {`${plate} lbs`}
                         </ToggleButton>
@@ -187,8 +188,8 @@ function App() {
                   })}
                 </ToggleButtonGroup>
                 <ToggleButtonGroup
-                  value={availablePlates}
-                  onChange={handleChangeAvailablePlates}
+                  value={plates}
+                  onChange={handleChangeplates}
                   color="primary"
                   fullWidth
                 >
@@ -198,10 +199,7 @@ function App() {
                         <ToggleButton
                           key={plate}
                           value={plate}
-                          selected={inAvailablePlatesArr(
-                            plate,
-                            availablePlates
-                          )}
+                          selected={inplatesArr(plate, plates)}
                         >
                           {`${plate} lbs`}
                         </ToggleButton>
@@ -245,7 +243,7 @@ function App() {
           </Box>
 
           {/* Results */}
-          {availablePlates.length > 0 && (
+          {plates.length > 0 && (
             <Box className="results mb-10">
               <TableContainer>
                 <Table size="small">
