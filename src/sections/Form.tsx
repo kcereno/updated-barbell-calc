@@ -57,6 +57,7 @@ function Form({ updateLoadout, updateInputData }: Props) {
     event: React.MouseEvent<HTMLElement>,
     newBarWeight: number
   ) => {
+    updateInputData({ barWeight, plates, targetWeight });
     if (newBarWeight || newBarWeight === 0) setBarWeight(newBarWeight);
   };
 
@@ -65,7 +66,7 @@ function Form({ updateLoadout, updateInputData }: Props) {
     updatedplates: number[]
   ) => {
     setPlates(updatedplates);
-    // updateInputData({ plates: updatedplates });
+    updateInputData({ plates: updatedplates });
   };
 
   const handleChangeTargetWeight = (

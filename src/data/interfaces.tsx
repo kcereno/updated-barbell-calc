@@ -11,7 +11,7 @@ export interface LoadoutEntry {
 }
 
 export interface InputData {
-  barWeight: number;
-  plates: number[];
-  targetWeight: number;
+  barWeight?: number;
+  plates?: number[];
+  targetWeight?: number;
 }

@@ -3,7 +3,7 @@ import { InputData } from './interfaces';
 import { Loadout } from './types';
 
 export const INITIAL_BAR_WEIGHT = 45;
-export const INITIAL_PLATES = [2.5, 5, 10, 15, 25, 35, 45, 55];
+export const INITIAL_PLATES = [55, 45, 35, 25, 15, 10, 5, 2.5];
 export const INITIAL_TARGET_WEIGHT = 0;
 export const INITIAL_LOADOUT: Loadout = INITIAL_PLATES.map((plate) => {
   return { plateValue: plate, perSide: 0, netWeight: 0 };
