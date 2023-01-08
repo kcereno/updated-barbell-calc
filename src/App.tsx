@@ -7,7 +7,7 @@ import {
   INITIAL_BAR_WEIGHT,
   INITIAL_LOADOUT,
 } from './data/variables';
-import { inplatesArr, calculateLoadout } from './data/functions';
+import { inPlatesArr, calculateLoadout } from './data/functions';
 import { Loadout } from './data/types';
 import { calculateTotalPlateWeight } from './data/functions';
 import { Box } from '@mui/material';
@@ -25,6 +25,8 @@ import {
   ButtonGroup,
   Button,
 } from '@mui/material';
+import { Title } from '@mui/icons-material';
+import Navbar from './sections/Navbar';
 
 function App() {
   const [barWeight, setBarWeight] = useState<number>(INITIAL_BAR_WEIGHT);
@@ -134,9 +136,7 @@ function App() {
     <Box className="app__container relative min-h-screen">
       <Box className="app__content pb-20">
         {/* Title */}
-        <Box className="title text-center py-5 bg-slate-700 text-white mb-8">
-          <h1 className="text-3xl">Barbell Calculator</h1>
-        </Box>
+        <Navbar />
         <Box className="max-w-3xl mx-auto">
           <Box
             component="form"
@@ -178,7 +178,7 @@ function App() {
                         <ToggleButton
                           key={plate}
                           value={plate}
-                          selected={inplatesArr(plate, plates)}
+                          selected={inPlatesArr(plate, plates)}
                         >
                           {`${plate} lbs`}
                         </ToggleButton>
@@ -199,7 +199,7 @@ function App() {
                         <ToggleButton
                           key={plate}
                           value={plate}
-                          selected={inplatesArr(plate, plates)}
+                          selected={inPlatesArr(plate, plates)}
                         >
                           {`${plate} lbs`}
                         </ToggleButton>

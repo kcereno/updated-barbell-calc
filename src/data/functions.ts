@@ -1,10 +1,7 @@
 import {} from './interfaces';
 import { Loadout } from './types';
 
-export const inAvailablePlatesArr = (
-  plate: number,
-  plateArr: number[]
-): boolean => {
+export const inPlatesArr = (plate: number, plateArr: number[]): boolean => {
   return plateArr.includes(plate);
 };
 
