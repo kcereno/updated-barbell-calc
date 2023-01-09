@@ -23,7 +23,6 @@ interface Props {
 }
 
 const Results = ({ loadout, updateLoadout, inputData }: Props) => {
-  console.log('Results ~ loadout', loadout);
   const { plates, barWeight } = inputData;
 
   const totalPlateWeight = loadout.reduce(

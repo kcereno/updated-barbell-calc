@@ -21,6 +21,6 @@ export const barWeights = [
   { entry: '60lbs', value: 60 },
 ];
 
-export const plateValues: number[] = [2.5, 5, 10, 15, 25, 35, 45, 55];
+export const plateValues: number[] = [55, 45, 35, 25, 15, 10, 5, 2.5];
 
 export const currentYear = new Date().getFullYear();
