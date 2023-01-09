@@ -18,7 +18,6 @@ import { plateValuesLb } from './data/variables';
 function App() {
   const [loadout, setLoadout] = useState<Loadout>(INITIAL_LOADOUT);
   const [inputData, setInputData] = useState<InputData>(INITIAL_INPUT_DATA);
-  console.log('App ~ inputData', inputData);
 
   const [mode, setMode] = useState<Mode>('lb');
 
