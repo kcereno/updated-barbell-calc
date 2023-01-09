@@ -71,7 +71,9 @@ const Results = ({ loadout, updateLoadout, inputData }: Props) => {
                 <TableRow>
                   <TableCell>Plate</TableCell>
                   <TableCell align="center">Edit</TableCell>
-                  <TableCell align="right">Per Side</TableCell>
+                  <TableCell align="right">
+                    Per Side / <strong>(Total)</strong>
+                  </TableCell>
                   <TableCell align="right">Net Weight</TableCell>
                 </TableRow>
               </TableHead>
@@ -105,8 +107,12 @@ const Results = ({ loadout, updateLoadout, inputData }: Props) => {
                         </ButtonGroup>
                       }
                     </TableCell>
-                    <TableCell align="right">{entry.perSide}</TableCell>
-                    <TableCell align="right">{entry.netWeight}</TableCell>
+                    <TableCell align="right">
+                      {entry.perSide} / <strong>{entry.perSide * 2}</strong>
+                    </TableCell>
+                    <TableCell align="right">
+                      {entry.plateValue * entry.perSide * 2}
+                    </TableCell>
                   </TableRow>
                 ))}
                 {barWeight !== 0 && (

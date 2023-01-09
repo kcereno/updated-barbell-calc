@@ -6,12 +6,7 @@ import {
   Button,
   Box,
 } from '@mui/material';
-import {
-  barWeightsLb,
-  plateValuesLb,
-  INITIAL_TARGET_WEIGHT,
-  barWeightsKg,
-} from '../data/variables';
+import { barWeightsLb, plateValuesLb, barWeightsKg } from '../data/variables';
 import { inPlatesArr } from '../data/functions';
 import { calculateLoadout } from '../data/functions';
 import { Loadout } from '../data/types';
@@ -36,7 +31,6 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
   const [plates, setPlates] = useState<number[]>([]);
   const [userPlates, setUserPlates] = useState<number[]>([]);
   const [targetWeight, setTargetWeight] = useState<number>(0);
-  console.log('Form ~ targetWeight', targetWeight);
   const [formIsValid, setFormIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [plateIndex, setPlateIndex] = useState<number>(0);
@@ -48,6 +42,7 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
       setPlates(plateValuesLb);
       setPlateIndex(4);
       setTargetWeight(0);
+      setUserPlates(plateValuesLb);
     }
 
     if (mode === 'kg') {
@@ -80,8 +75,9 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
       setFormIsValid(false);
       return;
     }
+    console.log('handleSubmit ~ userPlates', userPlates);
 
-    const newLoadout = calculateLoadout(barWeight, plates, targetWeight!);
+    const newLoadout = calculateLoadout(barWeight, userPlates, targetWeight!);
 
     setFormIsValid(true);
 
@@ -114,7 +110,7 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
 
   const handleReset = () => {
     setBarWeight(0);
-    setPlates([]);
+    setUserPlates([]);
     setTargetWeight(0);
     setFormIsValid(true);
   };

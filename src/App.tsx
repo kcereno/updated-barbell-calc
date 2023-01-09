@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
-import { INITIAL_LOADOUT, INITIAL_INPUT_DATA } from './data/variables';
+import {
+  INITIAL_LOADOUT,
+  INITIAL_INPUT_DATA,
+  plateValuesKg,
+} from './data/variables';
 import { calculateLoadout } from './data/functions';
 import { Loadout, Mode } from './data/types';
 import { InputData } from './data/interfaces';
@@ -9,16 +13,19 @@ import Navbar from './sections/Navbar';
 import Results from './sections/Results';
 import './App.css';
 import Footer from './sections/Footer';
+import { plateValuesLb } from './data/variables';
 
 function App() {
   const [loadout, setLoadout] = useState<Loadout>(INITIAL_LOADOUT);
   const [inputData, setInputData] = useState<InputData>(INITIAL_INPUT_DATA);
   console.log('App ~ inputData', inputData);
+
   const [mode, setMode] = useState<Mode>('lb');
 
   useEffect(() => {
-    const { plates, barWeight, targetWeight } = inputData;
-    setLoadout(calculateLoadout(barWeight!, plates!, targetWeight!));
+    // console.log('useffect triggered');
+    // const { plates, barWeight, targetWeight } = inputData;
+    // setLoadout(calculateLoadout(barWeight!, plates!, targetWeight!));
   }, [inputData]);
 
   const updateLoadout = (newLoadout: Loadout) => {
@@ -30,6 +37,14 @@ function App() {
   };
 
   const updatedMode = (newMode: Mode) => {
+    if (newMode === 'kg') {
+      setLoadout(calculateLoadout(20, plateValuesKg, 0));
+    }
+
+    if (newMode === 'lb') {
+      setLoadout(calculateLoadout(45, plateValuesLb, 0));
+    }
+
     setMode(newMode);
   };
 
@@ -42,9 +57,9 @@ function App() {
         />
         <Box className="content__wrapper max-w-3xl mx-auto">
           <Form
-            updateLoadout={updateLoadout}
             updateInputData={updateInputData}
             mode={mode}
+            updateLoadout={updateLoadout}
           />
           <Results
             loadout={loadout}
