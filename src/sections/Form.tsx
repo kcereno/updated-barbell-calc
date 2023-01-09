@@ -29,28 +29,33 @@ interface Props {
 }
 
 function Form({ updateLoadout, updateInputData, mode }: Props) {
-  console.log('Form ~ mode', mode);
-  const [barWeight, setBarWeight] = useState<number>(INITIAL_BAR_WEIGHT);
+  const [barWeight, setBarWeight] = useState<number>(0);
   const [bars, setBars] = useState<PlateValue[]>([]);
-  const [plates, setPlates] = useState<number[]>(INITIAL_PLATES);
+  const [plates, setPlates] = useState<number[]>([]);
+  const [userPlates, setUserPlates] = useState<number[]>([]);
+  console.log('Form ~ userPlates', userPlates);
   const [targetWeight, setTargetWeight] = useState<number>(
     INITIAL_TARGET_WEIGHT
   );
   const [formIsValid, setFormIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [plateIndex, setPlateIndex] = useState<number>(4);
+  const [plateIndex, setPlateIndex] = useState<number>(0);
 
   useEffect(() => {
     if (mode === 'lb') {
       setBars(barWeightsLb);
-
+      setBarWeight(45);
       setPlates(plateValuesLb);
       setPlateIndex(4);
-    } else {
+      setUserPlates(plateValuesLb);
+    }
+
+    if (mode === 'kg') {
       setBars(barWeightsKg);
       setBarWeight(20);
       setPlates(plateValuesKg);
       setPlateIndex(5);
+      setUserPlates(plateValuesKg);
     }
   }, [mode]);
 
@@ -95,7 +100,7 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
     event: React.MouseEvent<HTMLElement, MouseEvent>,
     updatedplates: number[]
   ) => {
-    setPlates(updatedplates);
+    setUserPlates(updatedplates);
     updateInputData({ plates: updatedplates });
   };
 
@@ -128,7 +133,7 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
           color="primary"
           fullWidth
         >
-          {bars.map((bar) => (
+          {bars!.map((bar) => (
             <ToggleButton
               key={bar.entry}
               value={bar.value}
@@ -143,7 +148,7 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
         <h2 className="uppercase mb-2">Plates</h2>
         <Box className="flex flex-col">
           <ToggleButtonGroup
-            value={plates}
+            value={userPlates}
             onChange={handleChangeplates}
             color="primary"
             fullWidth
@@ -154,7 +159,7 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
                   <ToggleButton
                     key={plate}
                     value={plate}
-                    selected={inPlatesArr(plate, plates)}
+                    selected={inPlatesArr(plate, userPlates)}
                   >
                     {plate}
                   </ToggleButton>
@@ -164,7 +169,7 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
             })}
           </ToggleButtonGroup>
           <ToggleButtonGroup
-            value={plates}
+            value={userPlates}
             onChange={handleChangeplates}
             color="primary"
             fullWidth
@@ -175,7 +180,7 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
                   <ToggleButton
                     key={plate}
                     value={plate}
-                    selected={inPlatesArr(plate, plates)}
+                    selected={inPlatesArr(plate, userPlates)}
                   >
                     {plate}
                   </ToggleButton>
