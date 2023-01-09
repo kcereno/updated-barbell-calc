@@ -41,6 +41,12 @@ function Form({ updateLoadout, updateInputData }: Props) {
       return;
     }
 
+    if (targetWeight < 0) {
+      setErrorMessage('Weight must not be negative');
+      setFormIsValid(false);
+      return;
+    }
+
     if (targetWeight < barWeight) {
       setErrorMessage('Target Weight must be greater than Bar Weight');
       setFormIsValid(false);
@@ -92,7 +98,7 @@ function Form({ updateLoadout, updateInputData }: Props) {
       onSubmit={handleSubmit}
     >
       <Box className="input__bar-weight mb-4">
-        <h2 className="uppercase mb-2">Bar Weight</h2>
+        <h2 className="uppercase mb-2">Bar</h2>
         <ToggleButtonGroup
           exclusive
           value={barWeight}
@@ -112,7 +118,7 @@ function Form({ updateLoadout, updateInputData }: Props) {
       </Box>
 
       <Box className="input__available-plates mb-6 ">
-        <h2 className="uppercase mb-2">Available Plates</h2>
+        <h2 className="uppercase mb-2">Plates</h2>
         <Box className="flex flex-col">
           <ToggleButtonGroup
             value={plates}
