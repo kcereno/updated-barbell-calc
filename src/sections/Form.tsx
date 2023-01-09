@@ -7,30 +7,52 @@ import {
   Box,
 } from '@mui/material';
 import {
-  barWeights,
-  plateValues,
+  barWeightsLb,
+  plateValuesLb,
   INITIAL_BAR_WEIGHT,
   INITIAL_PLATES,
   INITIAL_TARGET_WEIGHT,
+  barWeightsKg,
 } from '../data/variables';
 import { inPlatesArr } from '../data/functions';
 import { calculateLoadout } from '../data/functions';
 import { Loadout } from '../data/types';
-import { InputData } from '../data/interfaces';
+import { InputData, PlateValue } from '../data/interfaces';
+import { Mode } from '../data/types';
+import { useEffect } from 'react';
+import { plateValuesKg } from '../data/variables';
 
 interface Props {
   updateLoadout: (updatedLoadout: Loadout) => void;
   updateInputData: (inputData: InputData) => void;
+  mode: Mode;
 }
 
-function Form({ updateLoadout, updateInputData }: Props) {
+function Form({ updateLoadout, updateInputData, mode }: Props) {
+  console.log('Form ~ mode', mode);
   const [barWeight, setBarWeight] = useState<number>(INITIAL_BAR_WEIGHT);
+  const [bars, setBars] = useState<PlateValue[]>([]);
   const [plates, setPlates] = useState<number[]>(INITIAL_PLATES);
   const [targetWeight, setTargetWeight] = useState<number>(
     INITIAL_TARGET_WEIGHT
   );
   const [formIsValid, setFormIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [plateIndex, setPlateIndex] = useState<number>(4);
+
+  useEffect(() => {
+    if (mode === 'lb') {
+      setBars(barWeightsLb);
+
+      setPlates(plateValuesLb);
+      setPlateIndex(4);
+    } else {
+      setBars(barWeightsKg);
+      setBarWeight(20);
+      setPlates(plateValuesKg);
+      setPlateIndex(5);
+    }
+  }, [mode]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -106,7 +128,7 @@ function Form({ updateLoadout, updateInputData }: Props) {
           color="primary"
           fullWidth
         >
-          {barWeights.map((bar) => (
+          {bars.map((bar) => (
             <ToggleButton
               key={bar.entry}
               value={bar.value}
@@ -126,15 +148,15 @@ function Form({ updateLoadout, updateInputData }: Props) {
             color="primary"
             fullWidth
           >
-            {plateValues.map((plate, index) => {
-              if (index < 4)
+            {plates.map((plate, index) => {
+              if (index < plateIndex)
                 return (
                   <ToggleButton
                     key={plate}
                     value={plate}
                     selected={inPlatesArr(plate, plates)}
                   >
-                    {`${plate} lbs`}
+                    {plate}
                   </ToggleButton>
                 );
 
@@ -147,15 +169,15 @@ function Form({ updateLoadout, updateInputData }: Props) {
             color="primary"
             fullWidth
           >
-            {plateValues.map((plate, index) => {
-              if (index >= 4)
+            {plates.map((plate, index) => {
+              if (index >= plateIndex)
                 return (
                   <ToggleButton
                     key={plate}
                     value={plate}
                     selected={inPlatesArr(plate, plates)}
                   >
-                    {`${plate} lbs`}
+                    {plate}
                   </ToggleButton>
                 );
 

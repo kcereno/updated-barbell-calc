@@ -14,7 +14,6 @@ function App() {
   const [loadout, setLoadout] = useState<Loadout>(INITIAL_LOADOUT);
   const [inputData, setInputData] = useState<InputData>(INITIAL_INPUT_DATA);
   const [mode, setMode] = useState<Mode>('lb');
-  console.log('App ~ mode', mode);
 
   useEffect(() => {
     const { plates, barWeight, targetWeight } = inputData;
@@ -44,6 +43,7 @@ function App() {
           <Form
             updateLoadout={updateLoadout}
             updateInputData={updateInputData}
+            mode={mode}
           />
           <Results
             loadout={loadout}

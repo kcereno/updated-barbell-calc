@@ -1,4 +1,4 @@
-import { barWeights } from './variables';
+import { barWeightsLb } from './variables';
 export interface PlateValue {
   entry: string;
   value: number;
