@@ -9,8 +9,6 @@ import {
 import {
   barWeightsLb,
   plateValuesLb,
-  INITIAL_BAR_WEIGHT,
-  INITIAL_PLATES,
   INITIAL_TARGET_WEIGHT,
   barWeightsKg,
 } from '../data/variables';
@@ -20,7 +18,11 @@ import { Loadout } from '../data/types';
 import { InputData, PlateValue } from '../data/interfaces';
 import { Mode } from '../data/types';
 import { useEffect } from 'react';
-import { plateValuesKg } from '../data/variables';
+import {
+  plateValuesKg,
+  INITIAL_BAR_WEIGHT_LB,
+  INITIAL_BAR_WEIGHT_KG,
+} from '../data/variables';
 
 interface Props {
   updateLoadout: (updatedLoadout: Loadout) => void;
@@ -29,14 +31,12 @@ interface Props {
 }
 
 function Form({ updateLoadout, updateInputData, mode }: Props) {
-  const [barWeight, setBarWeight] = useState<number>(0);
   const [bars, setBars] = useState<PlateValue[]>([]);
+  const [barWeight, setBarWeight] = useState<number>(0);
   const [plates, setPlates] = useState<number[]>([]);
   const [userPlates, setUserPlates] = useState<number[]>([]);
-  console.log('Form ~ userPlates', userPlates);
-  const [targetWeight, setTargetWeight] = useState<number>(
-    INITIAL_TARGET_WEIGHT
-  );
+  const [targetWeight, setTargetWeight] = useState<number>(0);
+  console.log('Form ~ targetWeight', targetWeight);
   const [formIsValid, setFormIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [plateIndex, setPlateIndex] = useState<number>(0);
@@ -44,18 +44,19 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
   useEffect(() => {
     if (mode === 'lb') {
       setBars(barWeightsLb);
-      setBarWeight(45);
+      setBarWeight(INITIAL_BAR_WEIGHT_LB);
       setPlates(plateValuesLb);
       setPlateIndex(4);
-      setUserPlates(plateValuesLb);
+      setTargetWeight(0);
     }
 
     if (mode === 'kg') {
       setBars(barWeightsKg);
-      setBarWeight(20);
+      setBarWeight(INITIAL_BAR_WEIGHT_KG);
       setPlates(plateValuesKg);
       setPlateIndex(5);
       setUserPlates(plateValuesKg);
+      setTargetWeight(0);
     }
   }, [mode]);
 
@@ -68,19 +69,19 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
       return;
     }
 
-    if (targetWeight < 0) {
+    if (targetWeight! < 0) {
       setErrorMessage('Weight must not be negative');
       setFormIsValid(false);
       return;
     }
 
-    if (targetWeight < barWeight) {
+    if (targetWeight! < barWeight) {
       setErrorMessage('Target Weight must be greater than Bar Weight');
       setFormIsValid(false);
       return;
     }
 
-    const newLoadout = calculateLoadout(barWeight, plates, targetWeight);
+    const newLoadout = calculateLoadout(barWeight, plates, targetWeight!);
 
     setFormIsValid(true);
 
@@ -201,6 +202,10 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
           type="number"
           error={!formIsValid}
           helperText={!formIsValid && errorMessage}
+          value={targetWeight}
+          onClick={(event: any) => {
+            event.target.select();
+          }}
         />
       </Box>
       <Box className="buttons flex gap-1 justify-center">
