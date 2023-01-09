@@ -3,9 +3,6 @@ import { Loadout } from '../data/types';
 import { InputData } from '../data/interfaces';
 import {
   Table,
-  ToggleButton,
-  ToggleButtonGroup,
-  TextField,
   TableContainer,
   TableHead,
   TableRow,
@@ -24,6 +21,7 @@ interface Props {
 
 const Results = ({ loadout, updateLoadout, inputData }: Props) => {
   const { plates, barWeight } = inputData;
+  console.log('Results ~ barWeight', barWeight);
 
   const totalPlateWeight = loadout.reduce(
     (total, value) => (total += value.plateValue * value.perSide * 2),
@@ -62,7 +60,7 @@ const Results = ({ loadout, updateLoadout, inputData }: Props) => {
   };
 
   return (
-    <Fragment>
+    <Box>
       {plates!.length > 0 && (
         <Box className="results mb-10">
           <TableContainer>
@@ -86,7 +84,7 @@ const Results = ({ loadout, updateLoadout, inputData }: Props) => {
                     >
                       {entry.plateValue}
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="center">
                       {
                         <ButtonGroup size="small">
                           <Button
@@ -115,15 +113,15 @@ const Results = ({ loadout, updateLoadout, inputData }: Props) => {
                     </TableCell>
                   </TableRow>
                 ))}
-                {barWeight !== 0 && (
-                  <TableRow>
-                    <TableCell colSpan={2} />
-                    <TableCell colSpan={1}>
-                      <span className="font-bold">Bar</span>
-                    </TableCell>
-                    <TableCell align="center">{barWeight}</TableCell>
-                  </TableRow>
-                )}
+
+                <TableRow>
+                  <TableCell colSpan={2} />
+                  <TableCell colSpan={1}>
+                    <span className="font-bold">Bar</span>
+                  </TableCell>
+                  <TableCell align="center">{barWeight}</TableCell>
+                </TableRow>
+
                 <TableRow>
                   <TableCell colSpan={2} />
                   <TableCell colSpan={1}>
@@ -145,7 +143,7 @@ const Results = ({ loadout, updateLoadout, inputData }: Props) => {
           </TableContainer>
         </Box>
       )}
-    </Fragment>
+    </Box>
   );
 };
 

@@ -22,12 +22,6 @@ function App() {
 
   const [mode, setMode] = useState<Mode>('lb');
 
-  useEffect(() => {
-    // console.log('useffect triggered');
-    // const { plates, barWeight, targetWeight } = inputData;
-    // setLoadout(calculateLoadout(barWeight!, plates!, targetWeight!));
-  }, [inputData]);
-
   const updateLoadout = (newLoadout: Loadout) => {
     setLoadout(newLoadout);
   };
@@ -39,10 +33,12 @@ function App() {
   const updatedMode = (newMode: Mode) => {
     if (newMode === 'kg') {
       setLoadout(calculateLoadout(20, plateValuesKg, 0));
+      setInputData({ barWeight: 20, plates: plateValuesKg, targetWeight: 0 });
     }
 
     if (newMode === 'lb') {
       setLoadout(calculateLoadout(45, plateValuesLb, 0));
+      setInputData({ barWeight: 45, plates: plateValuesLb, targetWeight: 0 });
     }
 
     setMode(newMode);

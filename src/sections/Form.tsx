@@ -28,6 +28,7 @@ interface Props {
 function Form({ updateLoadout, updateInputData, mode }: Props) {
   const [bars, setBars] = useState<PlateValue[]>([]);
   const [barWeight, setBarWeight] = useState<number>(0);
+  console.log('Form ~ barWeight', barWeight);
   const [plates, setPlates] = useState<number[]>([]);
   const [userPlates, setUserPlates] = useState<number[]>([]);
   const [targetWeight, setTargetWeight] = useState<number>(0);
@@ -89,8 +90,11 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
     event: React.MouseEvent<HTMLElement>,
     newBarWeight: number
   ) => {
-    updateInputData({ barWeight, plates, targetWeight });
-    setBarWeight(newBarWeight);
+    console.log('Form ~ newBarWeight', newBarWeight);
+    if (newBarWeight !== null) {
+      setBarWeight(newBarWeight);
+      updateInputData({ barWeight, plates, targetWeight });
+    }
   };
 
   const handleChangeplates = (
