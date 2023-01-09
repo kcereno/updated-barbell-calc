@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { INITIAL_LOADOUT, INITIAL_INPUT_DATA } from './data/variables';
 import { calculateLoadout } from './data/functions';
-import { Loadout } from './data/types';
+import { Loadout, Mode } from './data/types';
 import { InputData } from './data/interfaces';
 import { Box } from '@mui/material';
 import Form from './sections/Form';
@@ -13,6 +13,8 @@ import Footer from './sections/Footer';
 function App() {
   const [loadout, setLoadout] = useState<Loadout>(INITIAL_LOADOUT);
   const [inputData, setInputData] = useState<InputData>(INITIAL_INPUT_DATA);
+  const [mode, setMode] = useState<Mode>('lb');
+  console.log('App ~ mode', mode);
 
   useEffect(() => {
     const { plates, barWeight, targetWeight } = inputData;
@@ -27,10 +29,17 @@ function App() {
     setInputData({ ...inputData, ...newInputData });
   };
 
+  const updatedMode = (newMode: Mode) => {
+    setMode(newMode);
+  };
+
   return (
     <Box className="app__container relative min-h-screen">
       <Box className="app__content pb-20">
-        <Navbar />
+        <Navbar
+          mode={mode}
+          updateMode={updatedMode}
+        />
         <Box className="content__wrapper max-w-3xl mx-auto">
           <Form
             updateLoadout={updateLoadout}

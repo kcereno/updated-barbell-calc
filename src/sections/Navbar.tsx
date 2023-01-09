@@ -1,3 +1,4 @@
+import { Mode } from '../data/types';
 import {
   Box,
   ToggleButtonGroup,
@@ -5,22 +6,23 @@ import {
   createTheme,
   ThemeProvider,
 } from '@mui/material';
-import { useState } from 'react';
 
-function Navbar() {
-  const [mode, setMode] = useState('lb');
-  console.log('Navbar ~ mode', mode);
+interface Props {
+  mode: Mode;
+  updateMode: (newMode: Mode) => void;
+}
 
+function Navbar({ updateMode, mode }: Props) {
   const darkTheme = createTheme({
     palette: { mode: 'dark' },
   });
 
   const handleModeChange = (
     event: React.MouseEvent<HTMLElement>,
-    newMode: string
+    newMode: Mode
   ) => {
     if (newMode !== null) {
-      setMode(newMode);
+      updateMode(newMode);
     }
   };
   return (
