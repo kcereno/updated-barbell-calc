@@ -115,23 +115,24 @@ const Results = ({ loadout, updateLoadout, inputData }: Props) => {
                 ))}
 
                 <TableRow>
-                  <TableCell colSpan={2} />
-                  <TableCell colSpan={1}>
+                  <TableCell
+                    rowSpan={3}
+                    colSpan={2}
+                  />
+                  <TableCell>
                     <span className="font-bold">Bar</span>
                   </TableCell>
                   <TableCell align="center">{barWeight}</TableCell>
                 </TableRow>
 
                 <TableRow>
-                  <TableCell colSpan={2} />
-                  <TableCell colSpan={1}>
+                  <TableCell>
                     <span className="font-bold">Plates</span>
                   </TableCell>
                   <TableCell align="center">{totalPlateWeight}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell colSpan={2} />
-                  <TableCell colSpan={1}>
+                  <TableCell>
                     <span className="font-bold">Total</span>
                   </TableCell>
                   <TableCell align="center">
