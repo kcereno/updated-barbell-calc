@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import {
   ToggleButton,
   ToggleButtonGroup,
@@ -6,18 +7,20 @@ import {
   Button,
   Box,
 } from '@mui/material';
-import { barWeightsLb, plateValuesLb, barWeightsKg } from '../data/variables';
-import { inPlatesArr } from '../data/functions';
-import { calculateLoadout } from '../data/functions';
-import { Loadout } from '../data/types';
-import { InputData, PlateValue } from '../data/interfaces';
-import { Mode } from '../data/types';
-import { useEffect } from 'react';
+
 import {
   plateValuesKg,
   INITIAL_BAR_WEIGHT_LB,
   INITIAL_BAR_WEIGHT_KG,
+  barWeightsLb,
+  plateValuesLb,
+  barWeightsKg,
 } from '../data/variables';
+
+import { inPlatesArr, calculateLoadout } from '../data/functions';
+
+import { Loadout, Mode } from '../data/types';
+import { InputData, PlateValue } from '../data/interfaces';
 
 interface Props {
   updateLoadout: (updatedLoadout: Loadout) => void;
@@ -28,11 +31,15 @@ interface Props {
 function Form({ updateLoadout, updateInputData, mode }: Props) {
   const [bars, setBars] = useState<PlateValue[]>([]);
   const [barWeight, setBarWeight] = useState<number>(0);
+
   const [plates, setPlates] = useState<number[]>([]);
   const [userPlates, setUserPlates] = useState<number[]>([]);
+
   const [targetWeight, setTargetWeight] = useState<number>(0);
+
   const [formIsValid, setFormIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
+
   const [plateIndex, setPlateIndex] = useState<number>(0);
 
   useEffect(() => {
