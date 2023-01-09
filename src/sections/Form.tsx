@@ -48,7 +48,9 @@ function Form({ updateLoadout, updateInputData }: Props) {
     }
 
     const newLoadout = calculateLoadout(barWeight, plates, targetWeight);
+
     setFormIsValid(true);
+
     updateLoadout(newLoadout);
     updateInputData({ barWeight, plates, targetWeight });
   };
@@ -58,7 +60,7 @@ function Form({ updateLoadout, updateInputData }: Props) {
     newBarWeight: number
   ) => {
     updateInputData({ barWeight, plates, targetWeight });
-    if (newBarWeight || newBarWeight === 0) setBarWeight(newBarWeight);
+    setBarWeight(newBarWeight);
   };
 
   const handleChangeplates = (

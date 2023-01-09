@@ -110,13 +110,15 @@ const Results = ({ loadout, updateLoadout, inputData }: Props) => {
                     <TableCell align="right">{entry.netWeight}</TableCell>
                   </TableRow>
                 ))}
-                <TableRow>
-                  <TableCell colSpan={2} />
-                  <TableCell colSpan={1}>
-                    <span className="font-bold">Bar</span>
-                  </TableCell>
-                  <TableCell align="center">{barWeight}</TableCell>
-                </TableRow>
+                {barWeight !== 0 && (
+                  <TableRow>
+                    <TableCell colSpan={2} />
+                    <TableCell colSpan={1}>
+                      <span className="font-bold">Bar</span>
+                    </TableCell>
+                    <TableCell align="center">{barWeight}</TableCell>
+                  </TableRow>
+                )}
                 <TableRow>
                   <TableCell colSpan={2} />
                   <TableCell colSpan={1}>
