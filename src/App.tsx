@@ -1,19 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
 import {
   INITIAL_LOADOUT,
   INITIAL_INPUT_DATA,
   plateValuesKg,
+  plateValuesLb,
 } from './data/variables';
 import { calculateLoadout } from './data/functions';
 import { Loadout, Mode } from './data/types';
 import { InputData } from './data/interfaces';
+
 import { Box } from '@mui/material';
 import Form from './sections/Form';
 import Navbar from './sections/Navbar';
 import Results from './sections/Results';
-import './App.css';
 import Footer from './sections/Footer';
-import { plateValuesLb } from './data/variables';
+
+import './App.css';
 
 function App() {
   const [loadout, setLoadout] = useState<Loadout>(INITIAL_LOADOUT);
