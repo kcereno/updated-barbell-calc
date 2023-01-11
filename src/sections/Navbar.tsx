@@ -27,7 +27,7 @@ function Navbar({ updateMode, mode }: Props) {
   };
   return (
     <Box className="navbar py-5 bg-slate-700 text-white mb-8">
-      <div className="flex justify-between  mx-4">
+      <div className="flex justify-between  mx-2 sm:mx-6">
         <h1 className="text-2xl sm:text-3xl self-center">Barbell Calculator</h1>
         <ThemeProvider theme={darkTheme}>
           <ToggleButtonGroup

@@ -1,5 +1,4 @@
 import { InputData } from './interfaces';
-
 import { Loadout } from './types';
 
 export const INITIAL_BAR_WEIGHT_LB = 45;
