@@ -26,19 +26,23 @@ function Navbar({ updateMode, mode }: Props) {
     }
   };
   return (
-    <Box className="navbar py-5 bg-slate-700 text-white mb-8">
-      <div className="flex justify-between  mx-2 sm:mx-6">
-        <h1 className="text-2xl sm:text-3xl self-center">Barbell Calculator</h1>
-        <ThemeProvider theme={darkTheme}>
-          <ToggleButtonGroup
-            value={mode}
-            exclusive
-            onChange={handleModeChange}
-          >
-            <ToggleButton value="lb">lb</ToggleButton>
-            <ToggleButton value="kg">kg</ToggleButton>
-          </ToggleButtonGroup>
-        </ThemeProvider>
+    <Box className="navbar py-5 bg-slate-700 text-white mb-8 ">
+      <div className="mx-auto max-w-3xl">
+        <div className="flex justify-between mx-3">
+          <h1 className="text-2xl sm:text-3xl self-center">
+            Barbell Calculator
+          </h1>
+          <ThemeProvider theme={darkTheme}>
+            <ToggleButtonGroup
+              value={mode}
+              exclusive
+              onChange={handleModeChange}
+            >
+              <ToggleButton value="lb">lb</ToggleButton>
+              <ToggleButton value="kg">kg</ToggleButton>
+            </ToggleButtonGroup>
+          </ThemeProvider>
+        </div>
       </div>
     </Box>
   );
