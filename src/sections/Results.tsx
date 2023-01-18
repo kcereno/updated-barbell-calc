@@ -69,7 +69,7 @@ const Results = ({ loadout, updateLoadout, inputData }: Props) => {
                   <TableCell>Plate</TableCell>
                   <TableCell align="center">Edit</TableCell>
                   <TableCell align="right">
-                    Per Side / <strong>(Total)</strong>
+                    <strong>Per Side</strong> / Total
                   </TableCell>
                   <TableCell align="right">Net Weight</TableCell>
                 </TableRow>
@@ -87,13 +87,6 @@ const Results = ({ loadout, updateLoadout, inputData }: Props) => {
                       {
                         <ButtonGroup size="small">
                           <Button
-                            onClick={() => {
-                              handleClickAddButton(entry.plateValue);
-                            }}
-                          >
-                            +
-                          </Button>
-                          <Button
                             disabled={entry.perSide === 0}
                             onClick={() => {
                               handleClickSubtractButton(entry.plateValue);
@@ -101,11 +94,18 @@ const Results = ({ loadout, updateLoadout, inputData }: Props) => {
                           >
                             -
                           </Button>
+                          <Button
+                            onClick={() => {
+                              handleClickAddButton(entry.plateValue);
+                            }}
+                          >
+                            +
+                          </Button>
                         </ButtonGroup>
                       }
                     </TableCell>
                     <TableCell align="right">
-                      {entry.perSide} / <strong>{entry.perSide * 2}</strong>
+                      <strong> {entry.perSide}</strong> / {entry.perSide * 2}
                     </TableCell>
                     <TableCell align="right">
                       {entry.plateValue * entry.perSide * 2}
