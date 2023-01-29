@@ -35,7 +35,8 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
   const [plates, setPlates] = useState<number[]>([]);
   const [userPlates, setUserPlates] = useState<number[]>([]);
 
-  const [targetWeight, setTargetWeight] = useState<number>(0);
+  const [targetWeight, setTargetWeight] = useState<number>();
+  console.log('Form ~ targetWeight', targetWeight);
 
   const [formIsValid, setFormIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -113,6 +114,11 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const updatedTargetWeight = event.target.value;
+
+    if (targetWeight === 0) {
+      setTargetWeight(+updatedTargetWeight);
+    }
+
     setTargetWeight(+updatedTargetWeight);
   };
 
@@ -206,7 +212,6 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
           type="number"
           error={!formIsValid}
           helperText={!formIsValid && errorMessage}
-          value={targetWeight}
           onClick={(event: any) => {
             event.target.select();
           }}
