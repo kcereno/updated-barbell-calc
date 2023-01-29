@@ -21,6 +21,7 @@ import { inPlatesArr, calculateLoadout } from '../data/functions';
 
 import { Loadout, Mode } from '../data/types';
 import { InputData, PlateValue } from '../data/interfaces';
+import { light } from '@mui/material/styles/createPalette';
 
 interface Props {
   updateLoadout: (updatedLoadout: Loadout) => void;
@@ -36,12 +37,13 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
   const [userPlates, setUserPlates] = useState<number[]>([]);
 
   const [targetWeight, setTargetWeight] = useState<number>();
-  console.log('Form ~ targetWeight', targetWeight);
 
   const [formIsValid, setFormIsValid] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const [plateIndex, setPlateIndex] = useState<number>(0);
+
+  const targetWeightRef = React.useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (mode === 'lb') {
@@ -49,7 +51,7 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
       setBarWeight(INITIAL_BAR_WEIGHT_LB);
       setPlates(plateValuesLb);
       setPlateIndex(4);
-      setTargetWeight(0);
+
       setUserPlates(plateValuesLb);
     }
 
@@ -59,7 +61,6 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
       setPlates(plateValuesKg);
       setPlateIndex(5);
       setUserPlates(plateValuesKg);
-      setTargetWeight(0);
     }
   }, [mode]);
 
@@ -205,6 +206,8 @@ function Form({ updateLoadout, updateInputData, mode }: Props) {
 
       <Box className="input__target-weight mb-6">
         <TextField
+          id="target-weight-input"
+          ref={targetWeightRef}
           label="Target Weight"
           variant="outlined"
           fullWidth
